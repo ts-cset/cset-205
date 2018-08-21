@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# CSET-205 Advanced Data Integration
+
+---
+
+# Agenda
+
+1. Introduction
+2. Syllabus
+3. API Basics
+4. Introduction to RESTful APIs
+---
+
+# Introduction
+
+About Me:
+* Jim Feather
+* jfeatherjr@gmail.com
+* Software Engineer for Industrial Resolution
+* Started coding in High School.
+* Computer Science major from Millersville University
+* Been working in custom software development since I graduated.
+
+Types of Projects:
+* Custom Websites
+* Mobile Apps
+* Custom Software Integrations
+
+---
+# What you should get out of this class:
+
+* Building REST APIs that manage data in databases
+* Be able to integrate with third party platforms.
+* Know the difference and uses for various data analysis methodologies
+* Identify data analysis goals and how they could change over time
+* Use a REST API in a reporting application
+
+---
+# Lets Get Started!
+--
+
+## API
+What is an API?
+--
+Definition:
+> It is a set of clearly defined methods of communication between various components
+[Wikipdeia](https://en.wikipedia.org/wiki/Application_programming_interface)
+
+--
+
+In English:
+
+--
+
+> It is a set of functions/methods that developers use to interact with data or systems that are related to, but not necessarily part of your application.
+
+---
+# What they are used for:
+
+* Accessing data from a remote data set
+* Performing CRUD operations tasks on a remote data set
+* Abstracting complex calculations away from your application code
+* Interact with hardware
+
+---
+# Why should I care about APIs?
+
+* Easy - An API can make it easier to write software without a need for a deep understanding or source code of another application or library
+* Extensible - Software vendors can provide an API to allow other developers to extend their software
+* Separate - Separating commonly used functions into a library, web service API or micro-service are some ways to help reuse code between applications and reduce bloat of your application.
+
+---
+## Some Examples:
+
+* Weather Forecasting Data: openweathermap.org
+* Social Media: Twitter, Facebook etc...
+* Date/Time Manipulation: [moment.js](http://www.momentjs.com)
+* Manipulating Hardware: Android Camera API
+* GitHub
+---
+# Common Uses of an API
+
+1. Operating Systems
+2. Libraries and Frameworks
+3. Remote / Web APIs
+
+Can you identify the type of API?
+* <!-- OS --> Microsoft Windows Print interface https://docs.microsoft.com/en-us/dotnet/api
+* <!-- Remote/Web --> NOAA National Weather Service - exposes weather data https://forecast-v3.weather.gov/documentation
+* <!-- Remote/Web --> Twitter Web API - allows remote applications to access users, tweets, send direct messages https://developer.twitter.com/en/docs.html
+* <!-- Library/Framework --> MomentJS - open source date time toolkit https://momentjs.com/
+* <!-- Library/Framework --> OpenCV - open source computer vision package that provides analysis and helpers for image and video processing in your application https://docs.opencv.org/2.4/modules/refman.html
+
+---
+
+<!--
+master: example
+-->
+
+# Example 1 - Operating System API
+
+Although Microsoft Windows is a closed source operating system, they expose operating system methods and interfaces to allow developers to utilize operating system resources. The Windows registry for example, can be read by importing the required namespace and using the `Registry` class to read values from the system.
+---
+```C
+using System;
+using Microsoft.Win32;
+
+class Reg {
+    public static void Main() {
+
+        // Create a RegistryKey, which will access the HKEY_USERS
+        // key in the registry of this machine.
+        RegistryKey rk = Registry.Users;
+
+        // Print out the keys.
+        PrintKeys(rk);
+    }
+
+    static void PrintKeys(RegistryKey rkey) {
+
+        // Retrieve all the subkeys for the specified key.
+        String [] names = rkey.GetSubKeyNames();
+
+        Console.WriteLine("Subkeys of " + rkey.Name);
+        Console.WriteLine("-----------------------");
+
+        // Print the contents of the array to the console.
+        foreach (String s in names) {
+            Console.WriteLine(s);
+        }
+    }
+}
+```
+
+--source https://docs.microsoft.com/en-us/dotnet/api/microsoft.win32.registry?view=netframework-4.7.2
+
+---
+
+<!--
+master: example
+-->
+
+# Example 2 - Library
+
+The MomentJS library is a popular tool for date/time related functions in Javascript. It can be used in client side web sites, server side and even mobile applications with tools like React Native. This library simplifies common needs like parsing dates from strings, adding and comparing dates, and formatting date objects into different output formats.
+
+```bash
+$ npm install moment --save
+```
+
+```javascript
+var moment = require('moment');
+console.log(moment().format());
+```
+
+This will output the current system time in the following format:
+> 2018-07-11T13:29:36-04:00
+
+```javascript
+var moment = require('moment');
+console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
+```
+
+> July 11th 2018, 1:28:24 pm
+
+-- source [MomentJS Documentation](https://momentjs.com/docs/)
+
+---
+
+<!--
+master: example
+-->
+
+# Example 3 - Remote / Web API
+
+National Oceanic and Atmospheric Administration ( NOAA ) exposes weather data via a web service API. In this example we are fetching the current weather forecast with the grid point from this geo-point (40.039172,-76.2912167).
+
+This is an easy way to fetch JSON data with a get request and format it with Python.
+
+```bash
+    curl https://api.weather.gov/gridpoints/CTP/126,29/forecast | python -m json.tool
+```
+---
+In this example we are setting up the options object with all the required parameters, and then performing an http request. The response is decoded to a Javascript object, and then we are printing the first "forecast".
+This is the same request as before, but in JS rather than curl.
+```Javascript
+const https = require('https');
+
+var options = {
+    host: 'api.weather.gov',
+    port: 443,
+    path: '/gridpoints/CTP/126,29/forecast',
+    method: 'GET',
+    headers: {
+        accept: 'application/json',
+        'user-agent': 'Mozilla/5.0'
+    }
+};
+
+var myRequest = https.request(options, (res) => {
+
+  res.on('data', (d) => {
+    obj = JSON.parse(d);
+    process.stdout.write(JSON.stringify(obj.properties.periods[0]));
+  });
+
+}).on('error', (e) => {
+  console.error(e);
+});
+
+myRequest.end();
+```
+
+--source https://forecast-v3.weather.gov/documentation
+---
+Results:
+```Javascript
+{
+   "number":1,
+   "name":"Tonight",
+   "startTime":"2018-08-20T19:00:00-04:00",
+   "endTime":"2018-08-21T06:00:00-04:00",
+   "isDaytime":false,
+   "temperature":65,
+   "temperatureUnit":"F",
+   "temperatureTrend":null,
+   "windSpeed":"5 mph",
+   "windDirection":"E",
+   "icon":"https://api.weather.gov/icons/land/night/bkn/rain_showers,20?size=medium",
+   "shortForecast":"Mostly Cloudy then Slight Chance Rain Showers",
+   "detailedForecast":"A slight chance of rain showers and a slight chance of drizzle after 5am. Mostly cloudy, with a low around 65. East wind around 5 mph. Chance of precipitation is 20%."
+}
+```
+---
+# Example Time!
+
+Tool: cURL
+
+cURL is a command line web request tool.
+
+Fetch data in terminal
+```bash
+curl http://api.openweathermap.org/data/2.5/weather?id=5197079&appid=5638cbed75af1251ed680fd7289a8d2c&units=imperial
+```
+[result](http://api.openweathermap.org/data/2.5/weather?id=5197079&appid=5638cbed75af1251ed680fd7289a8d2c&units=imperial)
+
+Fetch data in terminal and store response to a file
+```bash
+curl -o example http://jsonplaceholder.typicode.com/posts
+```
+[result](http://jsonplaceholder.typicode.com/posts)
+---
+# REST API
+
+## REST: Representational State Transfer
+
+### What Is Rest?
+Rest is a popular structure for building APIs.
+Due to their simplicity, REST apis tend to be easy to work with.
+
+6 tenants for building REST APIs.
+1. Client-server architecture
+2. Stateless
+3. Cacheable
+4. Uniform Interface
+5. Layered
+6. Code on Demand (optional)
+
+---
+# Client Server Architecture
+* Separates client code from server code.
+* This increases and promotes reusability
+* Allows developer to swap out rendering interfaces without having to re-build the backend server code.
+.right[![Right-aligned image](/resources/class1/client-server.png)]
+
+---
+# Stateless
+* The server does not store anything about previous requests (auth, history, sessions etc...).
+* Each request is stand alone
+* Each request contains all data needed to make the request.
+  * query parameters (pagination, filters etc...)
+  * post data
+  * auth credentials
+  * request headers
+
+---
+# Cacheable
+* REST responses should be cacheable when possible
+* reduces server load
+* reduces response time
+.right[![Right-aligned image](/resources/class1/client-server-cache.png)]
+
+---
+# Uniform Interface
+* All endpoints are structured the same.
+* This promotes simplicity and ease of API use.
+.right[![Right-aligned image](/resources/class1/uniform-interface.png)]
+
+---
+# Layered
+* Separation of concerns.
+* Code is split into logical segments.
+* rendering code, web requests, data handling etc...
+.right[![Right-aligned image](/resources/class1/layered.png)]
+
+---
+# Code On Demand
+* Only optional guideline.
+* Ability to download code from the server to execute locally
+* Holdover from early days of the internet
+* Not really used anymore, but it is part of the REST definitions.
+
+---
+# Recap / Questions?
+6 tenants for building REST APIs.
+1. Client-server architecture
+2. Stateless
+3. Cacheable
+4. Uniform Interface
+5. Layered
+6. Code on Demand (optional)
+---
+# REST URL Structure
+Parts of a REST URL:
+* Domain
+* Resource(s)
+* Object
+* Query
+.left[![Left-aligned image](/resources/class1/url-structure.png)]
+
+---
+# REST URL Characteristics:
+They are:
+* Are collection focused, rather than action focused. (Look for the noun)
+* Are consistent across endpoints
+* Make use of request type to determine actions
+* Human readable(ish)
+.left[![Left-aligned image](/resources/class1/url-structure.png)]
+
+---
+# Example 1: Which is correct?
+Need to get the Mustang record from the system
+1. GET https://api.example.com/cars/mustang
+2. GET https://api.example.com/cars/mustang/getData
+
+--
+## 1
+
+The GET request type implies that you are getting data, so it is not explicitly needed in the url endpoint
+
+---
+# Example 2: Which is correct?
+Need to update the Mustang record in the system
+1. GET https://api.example.com/cars/mustang/update
+2. PUT https://api.example.com/cars/mustang
+3. GET https://api.example.com/update_car/mustang
+
+--
+
+## 2
+Number 2 is the only one that is collection focused.  The other two are action focused
+---
+# Nested Data
+Related data can be nested into a hierarchy.
+For Example: Books can be accessed by author.
+1. GET https://api.example.com/books/catch-22
+2. GET https://api.example.com/authors/vonnegut/books/catch-22
+
+Which is correct API structure?
+
+--
+
+## Both!
+It depends on the context of why you are accessing Catch-22.
+If you want to just get that specific book, use \#1, but if you are accessing it through the Author, then use \#2.
+
+---
+# Lets take a look at a production API
+Github has a well defined, RESTful API.
+https://developer.github.com/v3
+```bash
+curl https://api.github.com/
+curl https://api.github.com/repositories
+curl https://api.github.com/orgs/octokit/repos
+curl https://api.github.com/repositories/1296269
+curl https://api.github.com/repos/octocat/Hello-World
+```
+---
+# Hands On Time!
+https://github.com/ts-cset/cset-205
+---
+# Responses
+* JSON or XML
+* Contains links to related objects
+* Different depending on the request type.
+  * GET: status code, requested object
+  * PUT/POST: status code, new/modified object
+  * DELETE: status code, may return some sort of success message.
+More in depth info about responses to come.
+---
+# Authentication
+Most APIs require some sort of authentication before allowing requests.
+This allows the API provider to limit permissions to administrators and serve data that should not be public knowledge.
+
+Credentials are typically passed as either a query parameter on the url, or as a request header.
+```bash
+curl http://api.example.com/author/vonnegut/?key=5638cbed75af1251ed680fd7289a8d2c
+```
+```bash
+curl http://api.example.com/author/vonnegut
+  -h "Authorization: Bearer 5638cbed75af1251ed680fd7289a8d2c"
+```
+More in depth info about responses to come.
+---
+# Types of Authentication
+* Basic Authentication: Username/password passed along with each request for validation
+  * simple solution
+  * less secure
+* API Keys: unique identifier (secret) passed along with the request for validation.
+  * simple solution
+  * less secure
+* OAuth: generated tokens are passed along with the request for validation
+  * Generated tokens expire and are refreshed periodically.
+  * more secure
+  * More complex
+---
+Authentication Example:
+Spotify API.
+https://developer.spotify.com/documentation/web-api/
+---
+# Links and Resources
+* https://restfulapi.net/
+* https://en.wikipedia.org/wiki/Application_programming_interface
+*
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

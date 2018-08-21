@@ -1,0 +1,40 @@
+{
+  "coord": {
+    "lon": -76.31,
+    "lat": 40.04
+  },
+  "weather": [{
+    "id": 801,
+    "main": "Clouds",
+    "description": "few clouds",
+    "icon": "02d"
+  }],
+  "base": "stations",
+  "main": {
+    "temp": 84.88,
+    "pressure": 1016,
+    "humidity": 58,
+    "temp_min": 82.4,
+    "temp_max": 86
+  },
+  "visibility": 16093,
+  "wind": {
+    "speed": 13.87,
+    "deg": 290
+  },
+  "clouds": {
+    "all": 20
+  },
+  "dt": 1534355760,
+  "sys": {
+    "type": 1,
+    "id": 2352,
+    "message": 0.0045,
+    "country": "US",
+    "sunrise": 1534328251,
+    "sunset": 1534377653
+  },
+  "id": 5197079,
+  "name": "Lancaster",
+  "cod": 200
+}
