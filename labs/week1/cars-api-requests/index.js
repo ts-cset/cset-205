@@ -28,17 +28,23 @@ const cars = [
     model: "Focus"
   },
 ]
-
+var lookupCar = (id) => {
+  return cars.find(car => {
+    return car.id == id
+  })
+}
+var lookupIndex = (id) => {
+  return cars.findIndex(car => {
+    return car.id == id
+  })
+}
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.get('/cars', (req, res) => res.send(cars))
 app.get('/cars/:id', (req, res) => {
   var id = req.params['id']
-  for(var i = 0; i < cars.length; i++){
-    if(cars[i].id === parseInt(id)){
-      res.send(cars[i])
-    }
-  }
+  var car = lookupCar(id)
+  res.send(car)
 })
 app.post('/cars', (req, res) => {
   const id = cars.length
@@ -51,18 +57,19 @@ app.post('/cars', (req, res) => {
 })
 app.put('/cars/:id', (req, res) => {
   var id = req.params['id']
+  var car = lookupCar(id)
+  var index = lookupIndex(id)
   for (var property in req.body) {
-    cars[id][property] = req.body[property]
+    car[property] = req.body[property]
   }
-  res.send(cars[id])
+  cars[index] = car
+  res.send(cars[index])
 })
 
 app.delete('/cars/:id', (req, res) => {
-  console.log('delete it')
   var id = req.params['id']
-
-  cars.splice(id, 1)
-  console.log(cars)
+  var index = lookupIndex(id)
+  cars.splice(index, 1)
   res.send("ok")
 })
 
