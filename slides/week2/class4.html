@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Agenda
+
+1. Review of last week
+2. PHP Exercise
+3. Introduction to Slim (PHP Framework)
+
+---
+# Last Week in Review
+
+---
+# APIs
+* What is an API?
+
+--
+
+* What are they used for?
+
+--
+
+* Three Types of APIs:
+
+--
+
+  * Operating System
+  * Remote / Web APIs
+  * Libraries / Frameworks
+
+--
+
+* CURL, what is it?
+---
+# RESTful APIs
+* What is REST?
+
+--
+
+* 6 principles of a RESTful API?
+
+--
+
+  * client-server
+  * stateless
+  * cacheable
+  * uniform interface
+  * layered
+  * code on demand
+
+--
+
+* REST URL Structure
+
+--
+
+  * collection focused.
+  * use HTTP request type to determine interaction
+  * https://restcountries.eu/rest/v2/name/Germany
+
+--
+
+* Strategies for Authentication
+
+--
+
+  * Basic Auth
+  * API Keys
+  * OAuth
+
+---
+
+# Documentation
+* 4 Types of documentation
+
+--
+
+  * Inline Code Documentation
+  * API Spec Sheets
+  * Public documentatino websites
+  * changelogs
+
+--
+
+# Semantic Versioning
+* Version Numbers
+
+--
+
+  * Major
+  * Minor
+  * patch
+---
+# Virtualbox / Vagrant
+* Benefits of server / dev environment management?
+* vagrant command to create server?
+* vagrant command to shut down/delete server?
+* vagrant command to ssh into server?
+---
+# PHP
+* powers most of the internet.
+* programming language
+---
+# New Business
+---
+# PHP
+.center[![Center-aligned image](http://php.net/images/logos/new-php-logo.png)]
+
+Exercise:  https://www.learn-php.org/
+---
+# Tracking Errors in PHP / Apache
+* Sometime errors will be displayed to the browser.
+* Errors also written to the Apache Error Log.
+```Bash
+sudo su
+tail -f /var/log/apache2/error.log
+```
+* PHP error logs
+```Bash
+tail -f /var/log/apache2/access.log
+```
+* access logs (shows traffic)
+---
+
+# Composer
+.center[![Center-aligned image](https://getcomposer.org/img/logo-composer-transparent.png)]
+
+* This is the NPM of the PHP world.
+* PHP package manager.
+
+Benefits of composer:
+* manage dependencies
+* version lock dependencies
+* autoloader automatically brings dependencies and custom scripts into your application
+* ease of updating dependenceis
+---
+# Using Composer:
+* More JSON Files!
+composer.json
+```Javascript
+{
+      "require": {
+          "slim/slim" : "^3.0"
+      }
+}
+```
+* add this file to git, that way anyone who checks out the repo will get same dependencies downloaded
+* ensures uniform versions of dependencies
+* dependencies are downloaded to a /vendor directory
+* gitignore the /vendor directory, otherwise all dependencies will be stored in your repo.
+---
+
+# Slim
+* PHP framework for building apis and web applications.
+
+---
+# Lets start a Slim project.
+From your labs/virtualMachines directory:
+
+--
+
+Checkout the class4 branch
+```Bash
+git fetch
+git checkout class4
+```
+
+SSH into the vagrant machine
+```Bash
+vagrant ssh
+```
+
+---
+
+# Directory Setup
+* Change directory to your working code directory
+  * This is configured as a shared directory with your Mac.  It matches the virtualMachines directory.
+
+```Bash
+cd /var/www/public
+```
+
+* make a new directory.
+
+```Bash
+mkdir firstSlim
+```
+
+---
+
+# Install Slim via Composer.
+
+```Bash
+composer require slim/slim
+composer install
+```
+* This uses composer to fetch slim and it's dependencies and places them in a newly created 'vendor' directory
+* This directory is automatically created via composer install, so it should be excluded from git via gitignore.
+* created 'composer.json' and 'composer.lock' files
+---
+
+# Code time!
+
+* create index.php in firstSlim directory
+
+---
+# index.php
+Lets build the php code from scratch!
+---
+# Empty PHP file
+```PHP
+<?php
+```
+---
+# Bring in dependencies
+```PHP
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+```
+* This pulls in dependenceis that are provided via slim's composer install process.
+* located in 'vendor/psr/http-message/src'
+* This allows us to use the Request and Response objects in our code.
+---
+# autoload
+```PHP
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
+require './vendor/autoload.php';
+```
+* autoload.php is part of composer.
+* It allows you to automatically pull in scripts and classes without having to manually import them.
+---
+# Create slim application
+
+```PHP
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
+require './vendor/autoload.php';
+
+$app = new \Slim\App;
+```
+* $app is our instance of slim.
+---
+# Create a request handler
+```PHP
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
+require './vendor/autoload.php';
+
+$app = new \Slim\App;
+$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
+    $name = $args['name'];
+    $response->getBody()->write("Hello, $name");
+    return $response;
+});
+```
+* {name} in the url indicates what the argument will be called.
+* $response->getBody()->write("Hello, $name"); adds the text "Hello, $name" to the response.
+---
+# Finish out the app
+```PHP
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
+require './vendor/autoload.php';
+
+$app = new \Slim\App;
+$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
+    $name = $args['name'];
+    $response->getBody()->write("Hello, $name");
+    return $response;
+});
+
+$app->run();
+```
+
+* $app->run() calls out to slim's run function
+* This tells PHP to run the slim app.
+
+---
+# Lets see it in action!
+Visit the following url with your name instead of 'your name here':
+http://192.168.33.10/firstSlim/hello/your_name_here
+
+---
+# Questions, confuion?
+---
+# Lets turn this into an API
+
+--
+
+## Step 1: logging
+```Bash
+composer require monolog/monolog
+```
+
+index.php
+```PHP
+$container = $app->getContainer();
+$container['logger'] = function($c) {
+    $logger = new \Monolog\Logger('my_logger');
+    $file_handler = new \Monolog\Handler\StreamHandler('../logs/app.log');
+    $logger->pushHandler($file_handler);
+    return $logger;
+};
+```
+* This creates a new directory 'logs' in the firstSlim directory
+* Creates and writes to app.log file in that directory.
+---
+## Step 2: database
+```Bash
+cd /var/www/public
+mysql -u root -p < apidb.sql
+```
+
+Insert after "require './vendor/autoload.php';"
+```PHP
+$config['db']['host']   = 'localhost';
+$config['db']['user']   = 'root';
+$config['db']['pass']   = 'root';
+$config['db']['dbname'] = 'apidb';
+```
+Need to pass new config into app creation.
+
+replace
+
+```PHP
+$app = new \Slim\App;
+```
+with
+```PHP
+$app = new \Slim\App(['settings' => $config]);
+```
+---
+## Step 3: new endpoint!
+Get people
+```PHP
+$app->get('/people', function (Request $request, Response $response) {
+    $this->logger->addInfo("GET /people");
+    $people = $this->db->query('SELECT * from people')->fetchAll();
+    $jsonResponse = $response->withJson($people);
+
+    return $jsonResponse;
+});
+```
+---
+# Lets test it!
+http://192.168.33.10/firstSlim/people
+
+--
+
+#Lets see it in action!
+http://192.168.33.10/slimExampleClient/
+---
+## Step 4: New endpoints!
+Lab: Create remaining endpoints for rest.
+
+* Get person by id
+* Edit person by id
+* Delete person by id
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

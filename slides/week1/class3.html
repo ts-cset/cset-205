@@ -181,7 +181,8 @@ echo('<h1>I can print HTML too!</h1>');
 * Resources
 
 ---
-# Integer
+# Data Types
+## Integer
 * whole numbers
 ```PHP
 $num = 42;
@@ -189,8 +190,8 @@ $num = 42;
 ```
 
 ---
-
-# Strings
+# Data Types
+## Strings
 * Text characters
 ```PHP
 $str = 'I am a string';
@@ -198,8 +199,8 @@ $str = 'I am a string';
 ```
 
 ---
-
-# Floats (Decimal)
+# Data Types
+## Floats (Decimal)
 * Decimal values
 ```PHP
 $float = 42.5;
@@ -207,8 +208,8 @@ $float = 42.5;
 ```
 
 ---
-
-# Boolean
+# Data Types
+## Boolean
 * True/False
 ```PHP
 $bool = true;
@@ -216,8 +217,12 @@ $bool2 = false;
 ```
 
 ---
-# Arrays
+# Data Types
+## Arrays
 * lists of data
+* 2 kinds of array.
+  * Indexed Array
+  * Associative Array
 ```PHP
 $colors = array("Red", "Green", "Blue");
 $colors2 = ["Red", "Green", "Blue"];
@@ -229,7 +234,8 @@ $colors3 = array(
 ```
 
 ---
-# Objects
+# Data Types
+## Objects
 * This is a class
 * contains fields (data)
 * contains functions for interracting with the fields.
@@ -252,19 +258,52 @@ var_dump($message);
 ```
 
 ---
-
-# Null
+# Data Types
+## Null
 * This is the PHP 'empty' variable value
 
 ---
-
-# Resource
+# Data Types
+## Resource
 * This is used to reference outside dependencies or objects.
   * file handler
   * email handler
   * etc...
 ---
-Further Reading:  https://www.tutorialrepublic.com/php-tutorial/php-introduction.php
+# Functions
+Functions are basically the same as in javascript.
+
+```PHP
+// define the function
+function halSaysNo($yourName, $action = "that"){
+  return "I'm sorry " . $yourName . " I can't let you do  " . $action;
+}
+$message = halSaysNo("Dave");
+echo $message;
+```
+---
+# Wordpress!
+* PHP powered CMS.
+* most popular website platform
+--
+# labs/virtualMachines
+```
+vagrant up
+```
+--
+* create a database
+```
+mysql -u root -p
+```
+(password is root)
+```
+create database wp;
+exit
+```
+Download wordpress, extract it and place it in virtualMachines
+http://192.168.33.10/wordpress//wp-json/wp/v2/posts
+---
+Exercise / Further Reading:  https://www.tutorialrepublic.com/php-tutorial/php-introduction.php
 ---
 
 
