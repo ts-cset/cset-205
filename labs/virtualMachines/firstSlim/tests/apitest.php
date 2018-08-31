@@ -71,6 +71,8 @@ class PeopleTest extends TestCase
     }
 
     public function testGetPerson() {
+
+      // test successful request
       $resultString = '{"id":"1","name":"Steve Martin","age":"73","occupation":"comedian"}';
       $query = $this->createMock('mockQuery');
       $query->method('fetch')->willReturn(json_decode($resultString, true));
@@ -87,6 +89,23 @@ class PeopleTest extends TestCase
       // assert expected status code and body
       $this->assertSame(200, $response->getStatusCode());
       $this->assertSame($resultString, (string)$response->getBody());
+    }
+    public function testGetPersonFailed() {
+      $query = $this->createMock('mockQuery');
+      $query->method('fetch')->willReturn(false);
+      $this->db->method('query')->willReturn($query);
+      $env = Environment::mock([
+          'REQUEST_METHOD' => 'GET',
+          'REQUEST_URI'    => '/people/1',
+          ]);
+      $req = Request::createFromEnvironment($env);
+      $this->app->getContainer()['request'] = $req;
+
+      // actually run the request through the app.
+      $response = $this->app->run(true);
+      // assert expected status code and body
+      $this->assertSame(404, $response->getStatusCode());
+      $this->assertSame('{"status":404,"message":"not found"}', (string)$response->getBody());
     }
 
     public function testUpdatePerson() {
@@ -120,6 +139,70 @@ class PeopleTest extends TestCase
       $this->assertSame($resultString, (string)$response->getBody());
     }
 
+    // test person update failed due to invalid fields
+    public function testUpdatePersonFailed() {
+      // expected result string
+      $resultString = '{"id":"1","name":"C.S. Lewis","age":"49","occupation":"writer"}';
+
+      // mock the query class & fetchAll functions
+      $query = $this->createMock('mockQuery');
+      $query->method('fetch')
+        ->willReturn(json_decode($resultString, true)
+      );
+      $this->db->method('query')
+            ->willReturn($query);
+       $this->db->method('exec')
+          ->will($this->throwException(new PDOException()));
+
+      // mock the request environment.  (part of slim)
+      $env = Environment::mock([
+          'REQUEST_METHOD' => 'PUT',
+          'REQUEST_URI'    => '/people/1',
+          ]);
+      $req = Request::createFromEnvironment($env);
+      $requestBody = ["name" =>  "C.S. Lewis", "age" => "49", "occupation" => "writer"];
+      $req =  $req->withParsedBody($requestBody);
+      $this->app->getContainer()['request'] = $req;
+
+      // actually run the request through the app.
+      $response = $this->app->run(true);
+      // assert expected status code and body
+      $this->assertSame(400, $response->getStatusCode());
+      $this->assertSame('{"status":400,"message":"Invalid data provided to update"}', (string)$response->getBody());
+    }
+
+    // test person update failed due to persn not found
+    public function testUpdatePersonNotFound() {
+      // expected result string
+      $resultString = '{"id":"1","name":"C.S. Lewis","age":"49","occupation":"writer"}';
+
+      // mock the query class & fetchAll functions
+      $query = $this->createMock('mockQuery');
+      $query->method('fetch')->willReturn(false);
+      $this->db->method('query')
+            ->willReturn($query);
+       $this->db->method('exec')
+          ->will($this->throwException(new PDOException()));
+
+      // mock the request environment.  (part of slim)
+      $env = Environment::mock([
+          'REQUEST_METHOD' => 'PUT',
+          'REQUEST_URI'    => '/people/1',
+          ]);
+      $req = Request::createFromEnvironment($env);
+      $requestBody = ["name" =>  "C.S. Lewis", "age" => "49", "occupation" => "writer"];
+      $req =  $req->withParsedBody($requestBody);
+      $this->app->getContainer()['request'] = $req;
+
+      // actually run the request through the app.
+      $response = $this->app->run(true);
+      // assert expected status code and body
+      $this->assertSame(404, $response->getStatusCode());
+      $this->assertSame('{"status":404,"message":"not found"}', (string)$response->getBody());
+
+    }
+
+
     public function testDeletePerson() {
       $query = $this->createMock('mockQuery');
       $this->db->method('exec')->willReturn(true);
@@ -134,5 +217,23 @@ class PeopleTest extends TestCase
       $response = $this->app->run(true);
       // assert expected status code and body
       $this->assertSame(200, $response->getStatusCode());
+    }
+
+    // test person delete failed due to person not found
+    public function testDeletePersonFailed() {
+      $query = $this->createMock('mockQuery');
+      $this->db->method('exec')->willReturn(false);
+      $env = Environment::mock([
+          'REQUEST_METHOD' => 'DELETE',
+          'REQUEST_URI'    => '/people/1',
+          ]);
+      $req = Request::createFromEnvironment($env);
+      $this->app->getContainer()['request'] = $req;
+
+      // actually run the request through the app.
+      $response = $this->app->run(true);
+      // assert expected status code and body
+      $this->assertSame(404, $response->getStatusCode());
+      $this->assertSame('{"status":404,"message":"not found"}', (string)$response->getBody());
     }
 }

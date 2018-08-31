@@ -44,13 +44,27 @@ class App
          $id = $args['id'];
          $this->logger->addInfo("GET /people/".$id);
          $person = $this->db->query('SELECT * from people where id='.$id)->fetch();
-         $jsonResponse = $response->withJson($person);
 
-         return $jsonResponse;
+         if($person){
+           $response =  $response->withJson($person);
+         } else {
+           $errorData = array('status' => 404, 'message' => 'not found');
+           $response = $response->withJson($errorData, 404);
+         }
+         return $response;
+
      });
      $app->put('/people/{id}', function (Request $request, Response $response, array $args) {
          $id = $args['id'];
          $this->logger->addInfo("PUT /people/".$id);
+
+         // check that peron exists
+         $person = $this->db->query('SELECT * from people where id='.$id)->fetch();
+         if(!$person){
+           $errorData = array('status' => 404, 'message' => 'not found');
+           $response = $response->withJson($errorData, 404);
+           return $response;
+         }
 
          // build query string
          $updateString = "UPDATE people SET ";
@@ -67,7 +81,12 @@ class App
          $updateString = $updateString . " WHERE id = $id;";
 
          // execute query
-         $this->db->exec($updateString);
+         try {
+           $this->db->exec($updateString);
+         } catch (\PDOException $e) {
+           $errorData = array('status' => 400, 'message' => 'Invalid data provided to update');
+           return $response->withJson($errorData, 400);
+         }
          // return updated record
          $person = $this->db->query('SELECT * from people where id='.$id)->fetch();
          $jsonResponse = $response->withJson($person);
@@ -77,10 +96,14 @@ class App
      $app->delete('/people/{id}', function (Request $request, Response $response, array $args) {
        $id = $args['id'];
        $this->logger->addInfo("DELETE /people/".$id);
-       $person = $this->db->exec('DELETE FROM people where id='.$id);
-       $jsonResponse = $response->withJson($person);
-
-       return;
+       $deleteSuccessful = $this->db->exec('DELETE FROM people where id='.$id);
+       if($deleteSuccessful){
+         $response = $response->withStatus(200);
+       } else {
+         $errorData = array('status' => 404, 'message' => 'not found');
+         $response = $response->withJson($errorData, 404);
+       }
+       return $response;
      });
 
      $this->app = $app;
