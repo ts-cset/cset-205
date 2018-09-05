@@ -11,13 +11,15 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
 $response = curl_exec($ch);
 $people = json_decode($response, true);
-echo "<h1>People</h1>";
-echo "<table class='table'>";
-echo "<tr><th>Name</th><th>Age</th><th>Occupation<th>Actions</th></th>";
+?>
+<h1>People</h1>
+      <table class='table'>
+      <tr><th>Name</th><th>Age</th><th>Occupation<th>Actions</th></th>
+<?php
 foreach($people as $person) {
-  echo "<tr>";
-  echo "<td>".$person["name"]."</td><td>".$person["age"]."</td><td>".$person["occupation"]."</td>";
-  echo "<td><a href='http://192.168.33.10/slimExampleClient/person.php?id=".$person["id"]."'>Details</a></td>";
-  echo "</tr>";
+  echo "<tr>
+        <td>".$person["name"]."</td><td>".$person["age"]."</td><td>".$person["occupation"]."</td>
+        <td><a href='http://localhost:8080/exampleClient/person.php?id=".$person["id"]."'>Details</a></td>
+        </tr>";
 }
 echo "</table>";

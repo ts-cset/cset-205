@@ -1,0 +1,29 @@
+<head>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  </head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<h1>People</h1>
+<table class='table' id='peopleTable'>
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Occupation</th>
+    <th>Actions</th>
+  </tr>
+</table>
+
+<script>
+$( document ).ready(function() {
+  $.get("http://localhost:8080/firstSlim/people", function(data, status){
+          // alert("Data: " + data + "\nStatus: " + status);
+          var table = $('.peopleTable');
+          data.forEach((person) => {
+              console.log(person);
+              $('#peopleTable tr:last').after('<tr><td>'+person.name+'</td><td>'+person.age+'</td><td>'+person.occupation+'</td><td></td></tr>');
+          });
+      });});
+</script>

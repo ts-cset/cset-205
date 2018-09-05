@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Agenda
+
+1. Quiz Review
+2. Review of last week
+3. Lab
+4. Integratig APIs
+
+---
+# Quiz 1: APIs
+---
+
+# Last Week in Review
+* PHP
+* Composer
+* Slim
+* Unit Testing
+* Error Handling
+---
+# PHP
+* powers most of the internet
+* server side code used to build websites and apis.
+---
+# Composer
+* package manager for PHP
+* Similar to NPM.
+* configured via json file.
+---
+# Slim
+* PHP microframework used to build websites and apis.
+* we used it in labs.
+---
+# Unit Testing
+* unit: smallest part of testable code
+* Allows you to know your code woks.
+* need to account for edge cases
+---
+# Error Handling
+* return sane error messages to users
+* response code, human readable message
+---
+# New Business!
+
+## Integrating APIs!
+
+Great!  We now have an API! <br/>
+Now What??? <br/>
+--
+**Now we use it!** <br/>
+
+---
+# What does this mean?<br/>
+
+--
+
+## Back to html development!
+
+--
+Sort of...
+
+Mixed PHP and HTML Files!
+
+* Custom PHP Client:  labs/virtualMachines/exampleClient
+* http://localhost:8080/exampleClient/
+
+
+## TO THE CODE!
+---
+# Benefits
+* quick to build
+* easy proof of concept / prototype app.
+
+
+# Some drawbacks:
+* Not as clear as to what is rendering logic and what is business logic.
+* No clear separation of concerns.
+* not testable.
+* routing is by directory structure.
+* highly custom, no formal defined structure.
+---
+# Slightly less custom!
+
+--
+
+## Slim to the rescue!
+* Slim client: labs/virtualMachines/slimClient
+* http://localhost:8080/slimClient
+
+## TO THE CODE!
+---
+# Benefits:
+* written in slim
+* matches the API
+* routing is handled via slim, rather than via file name.
+* testable
+
+
+# Some Drawbacks:
+* more effort to build
+* more complicated than straight php/html code.
+---
+.center[![Center-aligned image](https://media2.giphy.com/media/xznyPebL28X5u/giphy.gif
+)]
+
+---
+# HTML & Javascript sollution
+* HTML & JS : labs/virtualMachines/javascriptClient
+* http://localhost:8080/javascriptClient
+
+## TO THE CODE!
+---
+# Benefits:
+* entierely frontend
+* html/javascript should be more comfortable to some of you
+
+# Some Drawbacks:
+
+* now have two different platforms
+* asynchronous
+  * partial page load
+---
+# Today's Lab:
+Create an individual person page in the slim client.
+
+* look at exampleClient/person.php for inspiration
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
