@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+</head>
+<script src="public/script.js"></script>
+
+<h1><?php echo $title; ?> <a class="btn btn-info" href="http://localhost:8080/slimClient/people/add">Add Person</a></h1>
+<table class='table'>
+  <tr><th>Name</th><th>Age</th><th>Occupation</th><th>Actions</th></tr>
+<?php echo $tableRows; ?>
+</table>
