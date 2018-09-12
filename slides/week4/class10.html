@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Agenda
+
+1. Questions about Lab 1
+2. Questions about Lab 2
+3. Questions about Friday's Lecture
+4. Exam Review
+5. Authentication
+6. Lab Time
+---
+# Friday's Lecture
+* Keynote about impostor syndrome
+* feeling lost / confused / overwhelmed
+* Feeling like you have 'faked' your way into your current position
+---
+# Exam Review
+* API Overview:
+  * types and benefits of APIs
+* Rest APIs
+  * 6 principles of REST
+  * RESTful URL Structure
+* Semantic Versioning
+* Error Handling
+* Documentation
+* Vagrant/PHP
+* Unit Testing
+* Integrating APIs.
+---
+# Lab Time
+
+Problems with GitHub yesterday.
+
+* Extended timeframe for First REST API lab.
+* Extended timeframe for Second REST API lab.
+
+---
+# Authentication
+Need to protect parts of your api.
+* DELETE requests should not be open to the public
+* But GET requests may need to be open.
+
+## Types of Autnencication:
+* Basic
+* API Key
+---
+# Basic Auth:
+
+Send username / password with each request to the API.
+* https://en.wikipedia.org/wiki/Basic_access_authentication
+
+---
+# Basic Auth in SLIM
+* https://github.com/tuupola/slim-basic-auth
+
+```Bash
+composer require tuupola/slim-basic-auth
+```
+---
+```PHP
+$app->add(new Tuupola\Middleware\HttpBasicAuthentication([
+    "users" => [
+        "root" => "letMeIn",
+        "somebody" => "12345"
+    ]
+]));
+```
+Any Problems with this code?
+
+--
+
+The password is IN THE SOURCE!!!  Bad Idea, this is just asking for hacks.
+* people search github for passwords left in source code as a way to break into systems.
+
+--
+Solution?
+--
+Environment Variables.
+```Bash
+export SLIMPASSWORD="passwd"
+export SLIMPASSWORD2="otherpass"
+```
+```PHP
+$app->add(new Tuupola\Middleware\HttpBasicAuthentication([
+    "users" => [
+        "root" => getenv("SLIMPASSWORD"),
+        "somebody" => getenv("SLIMPASSWORD2")
+    ]
+]));
+```
+---
+# OAuth2
+* OAuth is a more involved method of authentication.
+* OAuth is a process, rather than just sending a username/password.
+
+1. User registers with API and is provided with a secret (similar to a password)
+2. Make request to API with secret to get token
+3. Pass your token with each api request.
+
+* https://developers.google.com/identity/protocols/OAuth2
+* https://aaronparecki.com/oauth-2-simplified/
+---
+# Exercise:
+Build out a basic authentication scheme for our firstSlim People API.
+---
+# Lab Time:
+
+Questions about extended deadlines?
+
+* Continue work on the first REST API lab if needed
+* Continue work on the second REST APU lab (integrate with a web client).
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
