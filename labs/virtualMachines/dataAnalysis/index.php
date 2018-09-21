@@ -77,12 +77,9 @@ foreach($averageData as $data){
     // }
   }
 }
-// echo("<input id='temp' type='hidden' value='".implode(", ", $tempData)."' />");
-
-// $tempData = $tempData . "]";
-// var_dump($tempData);
-// $tempData = '[80, 100, 56, 120, 180, 30, 40, 120, 160]';
-// $jsonTempData = json_encode($tempData);
+// Set tempearature data as a cookie.
+$implodedTemperatureData = implode(", ", $tempData);
+setcookie("temperatureData", $implodedTemperatureData);
 ?>
 <h1>Miami</h1>
 <html>
@@ -95,14 +92,21 @@ foreach($averageData as $data){
     <script>
     var svgWidth = 5000;
     var svgHeight = 300;
+    // read temperature data from the cookie and return it.
+    var getCookieData = () => {
+      // See here for Regex.  https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie
+      var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)temperatureData\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+      var decodedCookie = decodeURIComponent(cookieValue);
+      dataset = decodedCookie.replace(/\+/gi, "");
+      dataset = dataset.split(",");
+      return dataset;
+    }
     var svg = d3.select('svg')
         .attr("width", svgWidth)
         .attr("height", svgHeight)
         .attr("class", "bar-chart");
 
-        var dataset = <?php echo("[" . implode(", ", $tempData) . "]"); ?>;
-        // var dataset = document.getElementById('temp').value;
-        console.log(dataset);
+        var dataset = getCookieData();
         var barPadding = 5;
         var barWidth = (svgWidth / dataset.length);
         var barChart = svg.selectAll("rect")
