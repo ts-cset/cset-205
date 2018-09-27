@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Mapping
+## https://leafletjs.com/
+* Leafletjs: open source mapping library
+* MapBox: google maps like service.  Provides maps to be used in building applications
+---
+# In Class Exercise:
+* Drop pins on the map for each city
+* Draw colored lines connecting cities based on the flight path
+* Add click popups for each line with flight data
+* Add click popups for each city with city flight data.
+---
+# In Class Assignment:
+Using the meetup.com api, render upcoming events on a leaflet map.
+* clickable map pins
+* display event data on click.
+<br/>
+You will need an account with meetup.com to complete this assignment.
+<br/>
+### Helpful Documentation links
+* Authentication: https://www.meetup.com/meetup_api/auth/#keysign
+* API Key: https://secure.meetup.com/meetup_api/key/
+* API Documentation: https://secure.meetup.com/meetup_api
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

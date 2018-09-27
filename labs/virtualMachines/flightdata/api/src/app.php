@@ -28,10 +28,26 @@ class App
          return $logger;
      };
 
+     function destinations($airports, $flights) {
+       $numFlights = count($flights);
+       $percentages = [];
+       foreach ($airports as $airport) {
+         $airport_code = $airport['airport'];
+         $matching_flights = array_filter($flights,  function($flight) use ($airport_code){
+              return ($flight['dest'] == $airport_code);
+          });
+          $percentages[] = ['value'=> (count($matching_flights) / $numFlights * 100), 'label'=> $airport_code];
+       }
+       return $percentages;
+     }
 
      $app->get('/airports', function (Request $request, Response $response, array $args) {
+       $airports = $this->db->query('SELECT * from airports')->fetchAll();
+       $flights = $this->db->query('SELECT * from flights')->fetchAll();
+       $destinations = destinations($airports, $flights);
 
-         return $response;
+       $jsonResponse = $response->withJson($destinations);
+       return $jsonResponse;
      });
      $app->get('/flights', function (Request $request, Response $response) {
 
