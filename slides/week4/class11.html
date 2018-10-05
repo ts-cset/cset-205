@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Agenda
+
+1. Authentication Review
+2. Test Review
+3. Middleware Exercise
+4. Study / Lab time
+
+---
+# Wednesday's Lecture: Authentication
+## Types of Autnencication:
+* Basic
+* API Key (Oauth2)
+---
+# Basic Auth:
+
+Send username / password with each request to the API.
+* https://en.wikipedia.org/wiki/Basic_access_authentication
+
+---
+```PHP
+$app->add(new Tuupola\Middleware\HttpBasicAuthentication([
+    "users" => [
+        "root" => "letMeIn",
+        "somebody" => "12345"
+    ]
+]));
+```
+---
+# Security Error from yesterday
+* "Insecure use of middleware"
+
+Found that it was due to using Basic auth over non https.
+>>> Basic authentication transmits credentials in clear text. For this reason HTTPS should always be used together with basic authentication. If the middleware detects insecure usage over HTTP it will throw a RuntimeException with the following message: Insecure use of middleware over HTTP denied by configuration.
+
+https://github.com/tuupola/slim-basic-auth#security
+---
+# OAuth2
+* OAuth is a more involved method of authentication.
+* OAuth is a process.
+
+1. User registers with API and is provided with a secret (similar to a password)
+2. Make request to API with secret to get token
+3. Pass your token with each api request.
+---
+# OAuth2 Diagram
+.center[![Center-aligned image](https://developers.google.com/accounts/images/webflow.png)]
+
+* https://developers.google.com/identity/protocols/OAuth2
+---
+# Questions / Comments?
+---
+# Test Review
+* What is an API?
+
+--
+
+  * It is a set of functions/methods that developers use to interact with data or systems that are related to, but not necessarily part of your application.
+
+--
+
+* What they are used for:
+
+--
+
+  * Accessing data from a remote data set
+  * Performing CRUD operations tasks on a remote data set
+  * Abstracting complex calculations away from your application code
+  * Interact with hardware
+
+--
+
+* 3 type of api
+
+--
+
+  * Operating Systems
+  * Libraries and Frameworks
+  * Remote / Web APIs
+---
+# Test Review
+* 6 properties of REST
+
+--
+
+  * Client-server architecture
+  * Stateless
+  * Cacheable
+  * Uniform Interface
+  * Layered
+  * Code on Demand (optional)
+
+--
+
+* RESTful URL Structure
+
+--
+
+  * Are collection focused, rather than action focused. (Look for the noun)
+  * Are consistent across endpoints
+  * Make use of request type to determine actions
+  * Human readable(ish)
+  * GET https://api.example.com/cars/mustang
+  * PUT https://api.example.com/cars/mustang
+---
+# Test Review
+
+## Documentation Types
+--
+
+* Inline Code Documentation
+
+--
+    * code comments
+    * used to generate other documentation
+    * intended for developers
+--
+
+* API Spec Sheets
+
+--
+    * outlines structure of the API
+    * intended for developers and API designers
+---
+# Test Review
+
+## Documentation Types (cont.)
+
+* Documentation websites
+
+--
+    * public api documentation
+    * intended for customers, developers, users etc...
+    * can be generated via inline documentation
+--
+
+* Changelogs
+
+--
+    * intended for developers
+    * details changes and updates made to the codebase
+---
+# Test Review
+* Semantic Versioning
+
+--
+
+  * major version
+  * minor version
+  * patch number
+
+--
+
+* version in url
+  * query parameter
+  * in the rul
+  * request header
+---
+# Test Review
+* vagrant / virtualbox
+* vagrant commands
+--
+
+    * vagrant up
+    * vagrant halt
+    * vagrant ssh
+    * vagrant destroy
+
+--
+
+* php
+  * wordpress
+  * drupal
+  * slim
+  * \> 80% of the internet is PHP
+---
+# Test Review
+## Unit Testing
+* Benefits of testing
+--
+
+  * automated confirmation that code is functioning
+  * allows you to make a change, run the tests and see if something broke
+  * code review / pull requests:  allows coworksers to quickly verify that the code works
+  * you can build out tests so that you always check the same conditions.
+--
+
+* Error Handling
+  * gracefully handle errors in the code execution
+* parts of an error response
+--
+
+  * code
+  * message
+--
+
+* errors in an api
+  * 404 not found
+  * 500 system is broken
+  * 401/403 not authenticated
+---
+# Test Review
+* Integrating APIs
+  * http requests
+  * mixed html / php
+  * Framework for routing (SLIM)
+  * html/JS
+
+---
+# Test Review
+
+* look over slides from previous classees and you will be fine.
+* look at the exercise code from previous classes.  (firstslim/slimclient)
+* Questions, Further explanation needed?
+---
+# Middleware Exercise:
+Yesterday in class we used a pre-built middleware basic authentication system.
+
+
+Today: Visit this documentation page and create some middleware for yourself.
+* https://www.slimframework.com/docs/v3/concepts/middleware.html
+* Look at the "Application middleware" and "Route middleware" headings.
+* Use the "hello/{name}" endpoint or create a new endpoint to play with.
+
+---
+
+# Study / Lab Time
+
+* Lab 1:
+Due today
+* Lab 2:
+Due tomorrow
+
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

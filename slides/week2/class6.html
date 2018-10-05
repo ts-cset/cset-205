@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Agenda
+
+1. Review of Yesterday
+2. Review Lab
+3. Error Handling
+4. Introduce Project
+
+---
+# Yesterday!
+
+* Unit Testing
+* Lab
+---
+# Benefits of unit testing
+
+* know that your code works
+* know that changes do or do not affect unrelated pieces of code
+* code review can quickly verify that your code works.
+* outline of what the code should do and how it should behave.
+
+# Disadvantages/drawbacks of unit testig
+* time investment
+* individual unit tests do not guarantee that the app works as a whole
+* need to test for all possible edge cases / scenarios.
+---
+# Yesterday's Lab
+## Review the code files
+* Namespaces
+* Autoloading Magic
+* Testing
+* Testing Put Request
+
+---
+
+# Error Handling:
+* Our api is perfect, errors will never happen...
+
+--
+* ok, maybe we need some error handling.
+
+---
+# Error Handling:
+* error response codes should be thrown when errors happen.
+* don't always return 200 response.
+  * unless you are Facebook. (they always return 200, with error details in the body...)
+* 404, 500, etc...
+
+```PHP
+$app->get('/people/{id}', function (Request $request, Response $response, array $args) {
+    $id = $args['id'];
+    $this->logger->addInfo("GET /people/".$id);
+    $person = $this->db->query('SELECT * from people where id='.$id)->fetch();
+
+    if($person){
+      $response =  $response->withJson($person);
+    } else {
+      $errorData = array('status' => 404, 'message' => 'not found');
+      $response = $response->withJson($errorData, 404);
+    }
+    return $response;
+});
+```
+---
+# Error Handling Tests:
+* Need to test these new cases.
+
+```PHP
+public function testGetPersonFailed() {
+  $query = $this->createMock('mockQuery');
+  $query->method('fetch')->willReturn(false);
+  $this->db->method('query')->willReturn($query);
+  $env = Environment::mock([
+      'REQUEST_METHOD' => 'GET',
+      'REQUEST_URI'    => '/people/1',
+      ]);
+  $req = Request::createFromEnvironment($env);
+  $this->app->getContainer()['request'] = $req;
+
+  // actually run the request through the app.
+  $response = $this->app->run(true);
+  // assert expected status code and body
+  $this->assertSame(404, $response->getStatusCode());
+  $this->assertSame('{"status":404,"message":"not found"}', (string)$response->getBody());
+}
+```
+---
+# Lets look at code file again.
+---
+# Lab/Assignment
+Create your own Slim API.
+* For this repository as a starting point and vagrant configuration:  https://github.com/JimFeather/api-lab-template
+## Requirements:
+* Database with at least one type of data
+* Full CRUD (create, read, update, delete) endpoints (20 points)
+* Unit Tests for endpoints (20 points)
+* Error handling where needed (5 points)
+* Inline documentation for routes / functions (5 points)
+
+## Bonus Points:
+Bonus points will be awarded if you create your API with more than one data type and endpoint set.
+---
+## Submission instructions:
+* Create a git repository on your github account and send me the link via email.
+* Attach a database export / snapshot to your email.
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

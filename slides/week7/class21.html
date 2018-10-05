@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+# Python!
+---
+# Yesterday:
+* Python for rendering / data analytics
+* pip
+* virtualenv
+* matplotlib
+  * firstchart.py
+---
+# Today: Python for web development.
+* Python is used as a web development language.
+* Backend code, similar to PHP in purpose, if not in syntax.
+---
+# Python Frameworks
+* Flask
+* Bottle
+* Cherrypy
+* Django
+---
+# Flask
+* http://flask.pocoo.org/
+* micro framework
+* similar in function to SlimPHP
+---
+```Python
+@bp.route('/create', methods=('GET', 'POST'))
+@login_required
+def create():
+    """Create a new post for the current user."""
+    if request.method == 'POST':
+        title = request.form['title']
+        body = request.form['body']
+        error = None
+
+        if not title:
+            error = 'Title is required.'
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'INSERT INTO post (title, body, author_id)'
+                ' VALUES (?, ?, ?)',
+                (title, body, g.user['id'])
+            )
+            db.commit()
+            return redirect(url_for('blog.index'))
+
+    return render_template('blog/create.html')
+```
+---
+# Exercise:
+Flask Quickstart
+* http://flask.pocoo.org/docs/1.0/quickstart/
+---
+# Sample Flask App:
+* https://github.com/pallets/flask/blob/1.0.2/examples/tutorial/flaskr/blog.py
+---
+# Flask Rest API
+* Build it in vanilla flask
+  * less complexity
+* Flask Restful
+  * Simple REST addon for Flask.
+  * https://flask-restful.readthedocs.io/en/0.3.5/quickstart.html
+* Connexion
+  * Uses swagger files to create REST APIs in Flask.
+  * https://github.com/zalando/connexion
+  * https://github.com/hjacobs/connexion-example
+---
+# Lab / Assignment
+Create one of your previous APIs in Python using one of the 3 previously mentioned Flask API structures.
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

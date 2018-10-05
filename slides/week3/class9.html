@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Agenda
+
+1. Review of yesterday
+2. Keynote Presentation
+3. Lab Time
+
+---
+# Friday Lunch-n-Learn:
+Automatic drink dispensing machine.
+
+---
+# Yesterday:
+* Combined mixed php/html, slim and javascript into one project.
+* Introduced Template Files
+* Javascript to handle user interaction.
+---
+# PHP/HTML, Slim & Javascript
+* Play to their strengths.
+* rendering code: PHP/HTML
+* routing code: slim
+* user interaction: javascript
+---
+# updated route logic
+```PHP
+$app->get('/', function (Request $request, Response $response, array $args) {
+  $responseRecords = makeApiRequest('people');
+  $tableRows = "";
+  foreach($responseRecords as $person) {
+    $tableRows = $tableRows . "<tr>";
+    $tableRows = $tableRows . "<td>".$person["name"]."</td><td>".$person["age"]."</td><td>".$person["occupation"]."</td>";
+    $tableRows = $tableRows . "<td>
+    <a href='http://localhost:8080/slimClient/people/".$person["id"]."' class='btn btn-primary'>View Details</a>
+    <a href='http://localhost:8080/slimClient/people/".$person["id"]."/edit' class='btn btn-secondary'>Edit</a>
+    <a data-id='".$person["id"]."' class='btn btn-danger deletebtn'>Delete</a>
+
+    </td>";
+    $tableRows = $tableRows . "</tr>";
+  }
+
+  $templateVariables = [
+      "title" => "People",
+      "tableRows" => $tableRows
+  ];
+  return $this->renderer->render($response, "/people.html", $templateVariables);
+});
+```
+---
+# Template File
+```PHP
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+<script src="public/script.js"></script>
+
+<h1><?php echo $title; ?> <a class="btn btn-info" href="http://localhost:8080/slimClient/people/add">Add Person</a></h1>
+<table class='table'>
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Occupation</th>
+    <th>Actions</th>
+  </tr>
+  <?php echo $tableRows; ?>
+</table>
+```
+---
+# Javascript User Interaction
+```Javascript
+("#peopleForm").submit(function(event) {
+  var form = $(this);
+  event.preventDefault();
+  $.ajax({
+    type: "POST",
+    url: "http://localhost:8080/firstslim/people",
+    data: form.serialize(), // serializes the form's elements.
+    success: function(data) {
+      window.location.replace("http://localhost:8080/slimClient");
+    }
+  });
+});
+```
+---
+# Lets take a step back from code heavy lifting.
+
+* Today's lecture is not code focused.
+* It is inspired by several conversations I have had with both students and working developers over the years.
+
+
+Lets talk about learning and life as a programmer for a bit.
+
+--
+
+### Disclaimer: I am not a Psychologist, but I am a developer and have seen this first hand
+
+---
+
+# Always something new
+* Each project brings unique requirements and problems.
+* As a developer you are constantly learning new languages, frameworks, systems etc...
+* each new language / framework is another tool in your toolbox.
+* impossible to master everything you come across (And that is ok).
+
+---
+
+## That rapid innovation and learning is great, but what does that do to a developer's mindset?
+
+--
+* constantly feeling like a total beginner / noob.
+
+--
+* not sure where to start when presented with a problem
+  * Personal note from me: I experience this all the time.
+  * It is not uncommon to stare at the same code for quite a while, and then realize it is 20 minutes later and I don't actually have a plan of attack
+
+--
+* this does get better over time as you build familiarity and a level of comfort with a language / framework
+* never truely goes away though
+  * At least not for me.
+---
+# Keynote Speaker PyCon 2015
+## Jacob Kaplan-Moss
+* Talking about mediocracy and skill levels as a developer.
+* https://www.youtube.com/watch?v=hIJdFxYlEKE
+---
+# Takeaways?  Thoughts?
+
+--
+
+* measuring skill for developers is hard.
+* most people are average at what they do.
+
+---
+# In relation to that, "Imposter Syndrome"
+**Imposter Syndrome:** The feeling that I don't know what I'm doing, and worried that the people around me will realize that.
+* Fueled by self-doubt.
+* Nothing makes sense, not comprehending new languages/systems.
+* https://medium.com/blueprint/fighting-impostor-syndrome-as-a-cs-student-c43859062e1
+  * quick read.  (5-10 minutes)
+---
+# Lab/Assignment
+Create a web interface for your Slim API.
+## Due: Thursday 13th
+* Create a new branch on your git repository from the last lab.
+## Requirements:
+### Pages Needed:
+* Need interface to view all records
+* Need interface to view individual record
+* Need interface to edit individual record
+* Need interface to delete individual record
+* Need interface to create new record
+---
+### Systems:
+* Use slim for routing
+* Use php templates for rendering
+* Use javascript for interactivity
+* Add inline code documentation
+
+### Other Requriements
+* If you run into errors or problems you are unable to resolve, add a wirte up detailing what is happening, what you think the solution should be, and what your next steps will be.
+
+## Bonus Points:
+Bonus points will be awareded for extra creativity in your interfaces.
+---
+## Submission instructions:
+* Create a new branch on the repository for your lab from last week.
+* email me the link to your repository as well as the branch name.
+
+---
+# Other Notes:
+* Feel free to collaborate and bounce ideas / help each other.
+* Yesterday you guys moved around and were helping eachother out.  That is good, and actually happens in software development.
+  * Not doing group project submission though.  Everyone still needs their own codebase.
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Agenda
+
+1. Integrating APIs
+
+---
+# Web Requests.
+* we saw this yesterday a bit.
+* 4 types of web requests used:
+  * GET
+  * POST
+  * PUT
+  * DELETE
+
+## Looked at three possible ways to pull api data into a webpage.
+
+* Mixed PHP/HTML Files
+* PHP Web Framework (Slim)
+* HTML / Javascript
+---
+# Lets pull the best parts of all three to make one cohesive website.
+---
+# Wait, what?
+* Yesterday you said that mixed PHP/HTML files are old and terrible for building websites.
+* HTML / Javascript was just demoed as another possible way to build this.
+* Slim was made out like the best possible option.
+
+--
+
+True, however by combining all three together we can have a complete package of a website.
+---
+# How can we combine all three of these?
+
+--
+We play to the strengths of each component.
+
+* Slim is good at routing and making API requests
+* PHP/HTML files are good at creating page markup
+* Javascript is good at interactive interfaces
+
+---
+# New Branch (class8)!
+* Check out "class8" branch of the repository.
+* You will have some conflicts with yesterday's activity of building out the individual person page.
+* run "git stash" to store your changes before checking out the brach.
+* rerun "composer install" to get new dependencies.
+Changes from yesterday:
+Refactored slimClient significantly.
+---
+# What is different?
+* new directories in slimClient
+  * public
+  * templates
+* Moved rendering logic into templates directory.
+* javascript code is in the 'public' directory.
+---
+# Expand our slimClient.
+## PHP-View / PHPRenderer
+* This allows us to split rendering logic out of our app.php file.
+* improve readability and developer sanity.
+---
+#To The Codebase!
+
+## src/app.php
+```PHP
+$app->get('/', function (Request $request, Response $response, array $args) {
+  $responseRecords = makeApiRequest('people');
+  $tableRows = "  <tr><th>Name</th><th>Age</th><th>Occupation</th><th>Actions</th></tr>";
+  foreach($responseRecords as $person) {
+    $tableRows = $tableRows . "<tr>";
+    $tableRows = $tableRows . "<td>".$person["name"]."</td><td>".$person["age"]."</td><td>".$person["occupation"]."</td>";
+    $tableRows = $tableRows . "<td>
+    <a href='http://localhost:8080/slimClient/people/".$person["id"]."' class='btn btn-primary'>View Details</a>
+    <a href='http://localhost:8080/slimClient/people/".$person["id"]."/edit' class='btn btn-secondary'>Edit</a>
+    <a data-id='".$person["id"]."' class='btn btn-danger deletebtn'>Delete</a>
+
+    </td>";
+    $tableRows = $tableRows . "</tr>";
+  }
+
+  $templateVariables = [
+      "title" => "People",
+      "tableRows" => $tableRows
+  ];
+  return $this->renderer->render($response, "/people.html", $templateVariables);
+});
+```
+---
+# templates/people.html
+```html
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+<script src="public/script.js"></script>
+
+<h1><?php echo $title; ?> <a class="btn btn-info" href="http://localhost:8080/slimClient/people/add">Add Person</a></h1>
+<table class='table'>
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Occupation</th>
+    <th>Actions</th>
+  </tr>
+  <?php echo $tableRows; ?>
+</table>
+```
+---
+# Exercises:
+1. Create JS handler for delete person button.
+2. Create People Edit Form in templates and js handler
+3. Convert get person to use a template, rather than inline rendering.
+
+## As you finish:
+Tomorrow's Project: Start converting your lab api to use html templates.
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

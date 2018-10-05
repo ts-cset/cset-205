@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      img {
+        max-width: 100%;
+        border-style: solid;
+        border-width: 5px;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+# Agenda
+1. Recap of last class
+2. Virtualbox
+3. Vagrant
+4. PHP!
+---
+# Lets Review:
+* Types of Documentation
+* Documentation generators
+* Semantic Versioning
+* API Versioning
+
+---
+# Development Environments
+* Dev environment ideally matches production environment
+* Need a way to run ubuntu on your laptops.
+* Don't want to uninstall your existing operating system.
+---
+# Virtualbox!
+Virtualbox is a free virtualization tool that allows you to run a virtual computer inside your computer.
+* Benefits of virtual machines:  Can have multiple versions of dependencies without running into conflicts.
+  * different versions of mysql
+  * different versions of php
+  * different versions of apache
+  * different version of ___
+
+* https://www.virtualbox.org/
+* Download and run the installer.
+---
+# Now what?
+We need a server!
+Everyone go download and configure a server to run in virtualbox.
+--
+
+## wait, that could cause a problem.
+--
+
+* I download Ubuntu.
+
+--
+
+* someone else downloads Red Hat
+
+--
+
+* someone else downloads a different version of Ubuntu...
+
+--
+
+* Everyone's server could be slightly different.
+
+---
+# Now what?
+
+~~Everyone go download and configure a server to run in virtualbox.~~
+
+We need a way to programatically configure a server for us so that we all have the same server.
+
+---
+# Enter Vagrant!
+
+Vagrant is a server management toolset.
+
+* It allows us to all run identical virtual servers.
+* cuts down on "It works for me" issues.
+
+---
+# Exercise:
+My First Vagrant Server!
+https://www.vagrantup.com/intro/getting-started/index.html
+---
+# Why are we doing this?
+* gain exposure to industry standard tools
+* prep for the next major part of the class.
+  * creating our own APIs!
+
+---
+# New Programming Language! PHP!
+
+* PHP is a server side language
+* 83% of all websites are built with PHP!  https://w3techs.com/
+* Guarantee that a good portion of the sites you use are built with PHP.
+
+## Frameworks in PHP
+* Wordpress
+* Drupal
+* Laravel
+* Symfony
+* Cake
+* Zend
+---
+# What is PHP?
+* web programming language created in 1994!
+* Backend language that is executed on the server.
+* Powers most of the internet.
+* Can be mixed into HTML.
+* Current Version: 7
+---
+# How Does it work?
+```PHP
+<?php
+// Some code to be executed
+echo "Hello, world!";
+?>
+```
+* each line must end with a ;
+
+--
+
+Can be mixed with HTML, to create 'dynamic' html.
+```PHP
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A Simple PHP File</title>
+</head>
+<body>
+    <h1><?php echo "Hello, world!"; ?></h1>
+</body>
+</html>
+```
+---
+# Variables
+```PHP
+$variable = 'value';
+$array = ['value1', $variable, 'value2'];
+$array[0]; // will evaluate to 'value1'
+```
+* variable names must ALWAYS be prepended with $
+* variable names must start with either a letter, or an underscore
+* names can only contain alphanumeric characters and underscores
+
+## Constnts
+```PHP
+define("SITE_URL", "https://www.example.com/");
+echo(SITE_URL)
+```
+* variable that cannot change.
+---
+# Useful Functions
+Echo
+```PHP
+echo('this is a string');
+echo('<h1>I can print HTML too!</h1>');
+---
+# Data Types
+* Integer
+* Strings
+* Floating Point Numbers (Doubles)
+* Boolean
+* Arrays
+* Objects
+* Null
+* Resources
+
+---
+# Data Types
+## Integer
+* whole numbers
+```PHP
+$num = 42;
+
+```
+
+---
+# Data Types
+## Strings
+* Text characters
+```PHP
+$str = 'I am a string';
+
+```
+
+---
+# Data Types
+## Floats (Decimal)
+* Decimal values
+```PHP
+$float = 42.5;
+
+```
+
+---
+# Data Types
+## Boolean
+* True/False
+```PHP
+$bool = true;
+$bool2 = false;
+```
+
+---
+# Data Types
+## Arrays
+* lists of data
+* 2 kinds of array.
+  * Indexed Array
+  * Associative Array
+```PHP
+$colors = array("Red", "Green", "Blue");
+$colors2 = ["Red", "Green", "Blue"];
+$colors3 = array(
+    "Red" => "#ff0000",
+    "Green" => "#00ff00",
+    "Blue" => "#0000ff"
+);
+```
+
+---
+# Data Types
+## Objects
+* This is a class
+* contains fields (data)
+* contains functions for interracting with the fields.
+
+```PHP
+// Class definition
+class cat{
+    // properties
+    public $str = "Meow!";
+
+    // methods
+    function show_greeting(){
+        return $this->str;
+    }
+}
+
+// Create object from class
+$message = new cat;
+var_dump($message);
+```
+
+---
+# Data Types
+## Null
+* This is the PHP 'empty' variable value
+
+---
+# Data Types
+## Resource
+* This is used to reference outside dependencies or objects.
+  * file handler
+  * email handler
+  * etc...
+---
+# Functions
+Functions are basically the same as in javascript.
+
+```PHP
+// define the function
+function halSaysNo($yourName, $action = "that"){
+  return "I'm sorry " . $yourName . " I can't let you do  " . $action;
+}
+$message = halSaysNo("Dave");
+echo $message;
+```
+---
+# Wordpress!
+* PHP powered CMS.
+* most popular website platform
+--
+# labs/virtualMachines
+```
+vagrant up
+```
+--
+* create a database
+```
+mysql -u root -p
+```
+(password is root)
+```
+create database wp;
+exit
+```
+Download wordpress, extract it and place it in virtualMachines
+http://192.168.33.10/wordpress//wp-json/wp/v2/posts
+---
+Exercise / Further Reading:  https://www.tutorialrepublic.com/php-tutorial/php-introduction.php
+---
+
+
+
+  </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Mapping
+## https://leafletjs.com/
+* Leafletjs: open source mapping library
+* MapBox: google maps like service.  Provides maps to be used in building applications
+---
+# Map Elements
+* marker (pin)
+* popup
+* polyline
+* polygon<br/>
+
+Example Marker:<br/>
+```Javascript
+L.marker(airport['coordinates']).addTo(mymap)
+```
+Example Popup:<br/>
+```Javascript
+.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+```
+Example polyline:<br/>
+```Javascript
+var polyline = L.polyline(latlngs, {color: getRandomColor()}).addTo(mymap);
+```
+Example polygon:<br/>
+```Javascript
+var latlngs = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];
+var polygon = L.polygon(latlngs, {color: 'red'}).addTo(map);
+```
+
+---
+# GIS (geographic information system )
+>>> A geographic information system (GIS) is a framework for gathering, managing, and analyzing data. Rooted in the science of geography, GIS integrates many types of data. It analyzes spatial location and organizes layers of information into visualizations using maps and 3D scenes.
+<br/>
+
+-- ESRI https://www.esri.com/en-us/what-is-gis/overview
+
+<br/>
+
+This is a common way to perform advanced data analysis and rendering of geographical data.
+---
+# geoJSON
+geoJSON is a file format commonly used to store GIS map data.
+
+<br/>
+```Javascript
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [125.6, 10.1]
+  },
+  "properties": {
+    "name": "Dinagat Islands"
+  }
+}
+```
+See wikipedia for breakdown of geoJSON data structure.  https://en.wikipedia.org/wiki/GeoJSON
+---
+# Exercise:  Load geoJSON data for municipalities and school districts into a map of Pennsylvania.
+* Data Source: http://www.pasda.psu.edu/
+* http://www.pasda.psu.edu/uci/DataSummary.aspx?dataset=41
+* http://www.pasda.psu.edu/uci/DataSummary.aspx?dataset=101
+* http://www.pasda.psu.edu/uci/DataSummary.aspx?dataset=3045
+---
+# Layers
+Each time you add something to a map, it is added to a layer.
+* Multiple layers allow you to have multiple datasets on the same map.
+* You can toggle visible layers
+* Example layers
+  * base (geography layer)
+  * streets
+  * state borders
+  * custom data sets
+  * geoJSON rendered data
+---
+# Exercise:  multiple layers
+* Split the geoJSON rendered data into multiple layers
+* Add a toggle so that you can view one data set at a time.
+---
+# In Review:
+* Data Analysis Lifecycle
+* D3 Renderings
+* Leaflet Mapping
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

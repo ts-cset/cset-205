@@ -1,0 +1,44 @@
+{
+  "name": "express-codelab",
+  "version": "1.0.0",
+  "description": "Codelab for REST API exercises with Express",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "lint": "standard",
+    "test": "jest --watch",
+    "coverage": "jest --collectCoverageFrom=src/**.js --coverage",
+    "jsdoc": "jsdoc src -r -d docs",
+    "documentation": "documentation build src/** -f html -o docs",
+    "swagger": "swagger-jsdoc -d swaggerDef.js ./src/**.js"
+  },
+  "author": "No One",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "documentation": "^8.1.1",
+    "jest": "^23.4.0",
+    "jsdoc": "^3.5.5",
+    "standard": "^11.0.1",
+    "superagent": "^3.8.3",
+    "supertest": "^3.1.0",
+    "swagger-jsdoc": "^3.0.2"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "context",
+      "before",
+      "beforeEach",
+      "after",
+      "afterEach",
+      "it",
+      "expect",
+      "test"
+    ]
+  }
+}

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Agenda
+
+1. Review of Yesterday
+2. Review Lab
+3. Unit Testing
+
+---
+# Yesterday!
+* PHP
+* Composer
+* SLIM
+---
+# Yesterday's Lab
+Endpoints From Class:
+```PHP
+$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
+    $name = $args['name'];
+    $this->logger->addInfo('get request to /hello/'.$name);
+    $response->getBody()->write("Hello, $name");
+
+    return $response;
+});
+
+$app->get('/people', function (Request $request, Response $response) {
+    $this->logger->addInfo("GET /people");
+    $people = $this->db->query('SELECT * from people')->fetchAll();
+    $jsonResponse = $response->withJson($people);
+
+    return $jsonResponse;
+});
+```
+---
+# Endpoints from Lab Assignment:
+
+Get Person by Id
+```PHP
+$app->get('/people/{id}', function (Request $request, Response $response, array $args) {
+    $id = $args['id'];
+    $this->logger->addInfo("GET /people/".$id);
+    $person = $this->db->query('SELECT * from people where id='.$id)->fetch();
+    $jsonResponse = $response->withJson($person);
+
+    return $jsonResponse;
+});
+```
+
+* Test it:
+
+```Bash
+curl http://192.168.33.10/firstSlim/people/7
+```
+---
+Update Person by Id
+```PHP
+$app->put('/people/{id}', function (Request $request, Response $response, array $args) {
+    $id = $args['id'];
+    $this->logger->addInfo("PUT /people/".$id);
+
+    // build query string
+    $updateString = "UPDATE people SET ";
+    $fields = $request->getParsedBody();
+    $keysArray = array_keys($fields);
+    $last_key = end($keysArray);
+    foreach($fields as $field => $value) {
+      $updateString = $updateString . "$field = '$value'";
+      if ($field != $last_key) {
+        // conditionally add a comma to avoid sql syntax problems
+        $updateString = $updateString . ", ";
+      }
+    }
+    $updateString = $updateString . " WHERE id = $id;";
+
+    // execute query
+    $this->db->exec($updateString);
+    // return updated record
+    $person = $this->db->query('SELECT * from people where id='.$id)->fetch();
+    $jsonResponse = $response->withJson($person);
+
+    return $jsonResponse;
+});
+```
+---
+* Test it:
+
+```Bash
+curl -X PUT \
+  http://192.168.33.10/firstSlim/people/7 \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'Postman-Token: a23837f2-2b01-4776-89a8-8b528bd94aec' \
+  -d 'name=Douglas%20Adams&age=49&occupation=author'
+```
+---
+Delete Person by Id:
+```PHP
+$app->delete('/people/{id}', function (Request $request, Response $response, array $args) {
+  $id = $args['id'];
+  $this->logger->addInfo("DELETE /people/".$id);
+  $person = $this->db->exec('DELETE FROM people where id='.$id);
+  $jsonResponse = $response->withJson($person);
+
+  return;
+});
+```
+
+* Test it:
+
+```Bash
+curl -X DELETE  http://192.168.33.10/firstSlim/people/6
+```
+---
+# Speaking of testing things...
+--
+Unit Testing!
+* What is unit testing?
+
+--
+
+  * programatic tests of individual pieces of code.
+--
+
+* Why should I test?
+
+--
+  * automated confirmation that code is functioning
+  * allows you to make a change, run the tests and see if something broke
+  * code review / pull requests:  allows coworksers to quickly verify that the code works
+  * you can build out tests so that you always check the same conditions.
+---
+# Advantages of unit testing:
+* find problems faster
+  * If there is a bug in your code, having tests will make that bug more obvious
+  * Missing or missed pieces of functionality
+* quickly verify that new code or changes does not break existing functionality
+* A kind of documentation.  By looking at the tests and the expected output you can figure out how a piece of code is supposed to behave
+* Set a definite end goal for the code.
+  * If you write tests before the actual code, then you know that you are 'done' writing code when the tests pass.
+---
+# Disadvantage of unit testing
+* each possible outcome needs a test (potential for a lot of code)
+* need to spend time to think through your functions before they are built
+* time consuming
+* test pieces separately does not ensure that the whole system will work.
+* poor test data
+---
+# Example with 2 unit tests:
+* Unit test 1: assert that I can open a door with my hand
+* Unit test 2: Assert that I can engage a bolt lock with my hand
+
+--
+
+.center[![Center-aligned image](http://i.imgur.com/0T9s95E.gif)]
+---
+
+# Missing Test:
+
+* Engaging the lock prevents me from opening the door.
+---
+# Test Driven Development
+* Write tests first
+* Write code to satisfy the tests
+* know when code is finished,
+* forces you to think through your code before you write it.
+* it is not uncommon to spend as much time writing tests as actual code, if not more.
+---
+# Testing in PHP
+* PHPUnit.
+* PHPUnit is a unit testing framework for PHP applications.
+Words to know:
+* Unit: smallest portion of code that makes sense to test.
+* Mock: stub/recreation of a piece of code for the purposes of testing
+
+---
+# Lets build some tests for our Slim People API
+* Changes to the vagrant box.
+  * updated to php version 7.1 to fix dependency issues.
+
+```Bash
+vagrant provision
+delete vendor directory
+vagrant ssh
+cd /var/www/public/firstSlim
+composer require --dev phpunit/phpunit
+```
+---
+# A few problems with index.php
+
+--
+
+* app creation and app run is in the same file.
+* This does not give us a place to hook in and access the code from our tests.
+* No easy way to mock the database.
+
+--
+
+## Solution: Lets split index.php into a few files.
+
+* app.php: bulk of the code.
+* index.php: database configuration and app->run()
+* will use composer.json and autoload to pull app.php into index.php for execution
+---
+* rename index.php => index-old.php
+* create new index.php
+
+```PHP
+<?php
+
+require './vendor/autoload.php';
+$db = function ($c) {
+    $db = $c['settings']['db'];
+    $pdo = new PDO('mysql:host=' . $db['host'] . ';dbname=' . $db['dbname'],
+        $db['user'], $db['pass']);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    return $pdo;
+};
+
+$app = (new feather\firstSlim\App($db))->get();
+
+$app->run();
+
+```
+---
+* create directory 'src' in firstSlim.
+* create app.php in new src directory
+---
+```PHP
+<?php
+namespace feather\firstSlim;
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+require './vendor/autoload.php';
+
+class App
+{
+
+   private $app;
+   public function __construct($db) {
+
+     $config['db']['host']   = 'localhost';
+     $config['db']['user']   = 'root';
+     $config['db']['pass']   = 'root';
+     $config['db']['dbname'] = 'apidb';
+
+     $app = new \Slim\App(['settings' => $config]);
+
+     $container = $app->getContainer();
+     $container['db'] = $db;
+
+     ... logger setup from index-old.php ...
+     ... routing functions from index-old.php ...
+
+     $this->app = $app;
+   }
+
+   public function get()
+   {
+       return $this->app;
+   }
+ }
+
+```
+---
+# Autoload:
+
+composer.json should be updated to look like this.
+
+```Javascript
+{
+    "require": {
+        "slim/slim": "^3.10",
+        "monolog/monolog": "^1.23"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "feather\\firstSlim\\" : "src"
+        }
+    }
+}
+
+```
+Execute:
+```Bash
+composer dump-autoload
+```
+---
+# visit http://192.168.33.10/firstSlim/people
+If it looks like it did yesterday then everything works. :)
+
+---
+# Lets finally do some testing!
+* Create directory 'tests' in firstSlim.
+* Create file 'apiTest.php'
+
+```PHP
+<?php
+use PHPUnit\Framework\TestCase;
+
+class TodoTest extends TestCase
+{
+    public function testTodoGet() {
+        $this->assertTrue(true);
+    }
+}
+```
+---
+You now have a test file!
+```Bash
+phpunit tests/apitest.php
+```
+* this will execute your tests.
+* should pass, we are just asserting that true is true.
+---
+# Some more useful tests!
+```PHP
+public function testHelloName() {
+  $env = Environment::mock([
+      'REQUEST_METHOD' => 'GET',
+      'REQUEST_URI'    => '/hello/Joe',
+      ]);
+  $req = Request::createFromEnvironment($env);
+  $this->app->getContainer()['request'] = $req;
+  $response = $this->app->run(true);
+  $this->assertSame($response->getStatusCode(), 200);
+  $this->assertSame((string)$response->getBody(), "Hello, Joe");
+}
+```
+---
+```PHP
+
+// test the GET people endpoint
+public function testGetPeople() {
+
+  // expected result string
+  $resultString = '[{"id":"1","name":"Steve Martin","age":"73","occupation":"comedian"},{"id":"2","name":"Johnny Depp","age":"55","occupation":"actor"},{"id":"3","name":"Sammy Hagar","age":"70","occupation":"musician"},{"id":"4","name":"Elvis Presley","age":"42","occupation":"musician"},{"id":"5","name":"Joe Johnson","age":"25","occupation":"driver"},{"id":"7","name":"Samuel L Jackson","age":"69","occupation":"actor"},{"id":"8","name":"Steve Wozniak","age":"68","occupation":"programmer"},{"id":"9","name":"Ada Lovelace","age":"36","occupation":"programmer"},{"id":"10","name":"Grace Hopper","age":"85","occupation":"programmer"},{"id":"11","name":"Alan Turing","age":"41","occupation":"programmer"}]';
+
+  // mock the query class & fetchAll functions
+  $query = $this->createMock('mockQuery');
+  $query->method('fetchAll')
+    ->willReturn(json_decode($resultString, true)
+  );
+   $this->db->method('query')
+         ->willReturn($query);
+
+  // mock the request environment.  (part of slim)
+  $env = Environment::mock([
+      'REQUEST_METHOD' => 'GET',
+      'REQUEST_URI'    => '/people',
+      ]);
+  $req = Request::createFromEnvironment($env);
+  $this->app->getContainer()['request'] = $req;
+
+  // actually run the request through the app.
+  $response = $this->app->run(true);
+  // assert expected status code and body
+  $this->assertSame($response->getStatusCode(), 200);
+  $this->assertSame((string)$response->getBody(), $resultString);
+}
+
+```
+---
+# Exercise:
+* Build tests around the other endpoints.
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

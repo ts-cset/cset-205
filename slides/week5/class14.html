@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Review of Yesterday!
+## Data Analysis!
+---
+# Data Analysis
+What is Data Analysis?
+<br/>
+<br/>
+--
+Data analysis is a process of inspecting, cleansing, transforming, and modeling data with the goal of discovering useful information, informing conclusions, and supporting decision-making
+
+* Why?
+--
+
+  * Identify trends over time
+  * Make predictions and projections
+  * Make informed decisions
+  * Support hypothesis
+  * Facilitate research
+  * Reduce personal bias when evaluating research / decisions.
+---
+# Data Analysis Lifecycle
+**7 steps to the data analysis**
+--
+
+* Discovery / Requirements
+--
+
+* Collection
+--
+
+* Data Prep / Cleaning
+--
+
+* Exploration / Planning
+--
+
+* Modeling / Algorithms
+--
+
+* Automation / Computation
+--
+
+* Findings / Review / Repeat
+---
+# Discover / Requirements
+--
+
+This is the planning stage of data analysis.
+* What data do we need?
+* Who needs it?
+* Why is it important?
+* What are our goals?
+* What is the business value?
+---
+# Collection
+--
+
+This is our data collection phase.
+* Publicly available data sets
+* Physical sensors (temperature, traffic cameras, satellites, etc...)
+* Interviews
+* etc...
+---
+# Data Prep / Cleaning
+
+This is where we look for and fix any problems with our data set.
+* missing data points
+* duplicate records
+* inaccuracies
+* quality of data
+* data format checks
+  * ensure all money formats are the same Ex: dollars and cents as a decimal ($2000.41) vs. cents as an integer (200041)
+---
+# Exploration / Planning
+This is where we start to look at the data to begin planning out more detailed analysis.
+* Look for high level trends in the data
+* Identify possible algorithms or modeling to build later
+* Identify missing data
+* Identify further cleaning / invalid data
+---
+# Modeling / Algorithms
+This is where we bring statistics, math and deeper thought into the mix.
+* Mathematical formulas are identified and built to manipulate the data.
+* Statistical models are identified and used.
+---
+# Automation / Computation
+This is where we create and or use software to run the formulas and models defined in the previous step.
+* Create functions to run against the data
+* Generate reports and charts based on the data
+* Common programming languages used: Python, R
+---
+# Findings / Review / Repeat
+This is where the decision makers review the output of the models to inform their decisions.
+<br/>
+May result in additional analysis, new data needed,
+<br/>
+<br/>
+**Rinse and Repeat**
+---
+# Yesterday's Exercise:
+Looked at Mr. Steve who wants to open a beach town.
+
+What did we find?
+--
+<br/>
+Piles of scv data!
+<br/>
+---
+# What did we do?
+* Processed the data in PHP
+* rendered it into an HTML table
+* started plugging it into D3 for graphs.
+---
+# Visualizations:
+* We saw a simple visualization yesterday.  (Table rendering).
+<br/>
+## More advanced rendering is possible.
+* d3.js
+## What is D3?
+* Data Driven Documents
+* Creates and manipulates html elements based on data via javascript
+* Styled via CSS
+* Can manipulate HTML and SVGs
+
+---
+# Bar Charts:
+* This tutorial was created by the creator of D3.
+* Go through each of the three sections, then incorporate our temperature data from yesterday into the graph.
+* Exercise: https://bost.ocks.org/mike/bar/
+---
+# Lab:
+Flow through the Data Analysis Lifecycle on this data set:  https://www.census.gov/data/datasets/2017/demo/popest/counties-detail.html
+Census data by County (for a given state).
+
+* Flow through the 7 steps of the Data Analysis Lifecycle
+* Documenting what you create for each step in a README file for the repository.
+* Download the data set for a given state
+* Create interesting visualizations based on the data.
+* Create a new repository on your GitHub account and sene me the link to your data processing and visualization code.
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

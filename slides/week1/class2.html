@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      img {
+        max-width: 100%;
+        border-style: solid;
+        border-width: 5px;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+# Agenda
+1. Recap of last class
+2. API Documentation
+3. Versioning
+---
+# Lets Review:
+* What is an api and what are some benefits of using one?
+
+--
+* What are the three main types of API?
+
+--
+* What are the 6 principles of a rest api?
+
+--
+* RESTful api urls are focused around what?
+
+---
+# Questions, Concerns, Comments, Complaints?
+Any questions/comments from previous class?
+Speak up!  We have plenty of time each class to answer questions and review material.
+---
+# API Documentation
+
+A well documented api is a thing of beauty.  A poorly documented api is a developer's worst nightmare.
+---
+# Example 1: Oracle Netsuite (Enterprise Resource Planning tool)
+http://www.netsuite.com/portal/developers/resources/suitetalk-documentation.shtml
+
+API Documentation: WSDL File.
+https://webservices.netsuite.com/wsdl/v2018_1_0/netsuite.wsdl
+* This style of documentation works......... If you know what to look for & have the tools to parse it.
+* Not user friendly AT ALL!
+
+--
+
+# Example 2: Twilio
+https://www.twilio.com/docs/voice
+* Code Examples
+* Human readable documentation
+
+---
+## Types of Documentation:
+* Inline Code Documentation
+* API Spec Sheets
+* Documentation websites
+* Changelogs
+
+---
+# Why Write Documentation?
+* Can help you stay focused when writing code
+* Helps the readability of your code
+* Easier to transfer projects to other developers
+* Sometimes it is required by the client
+
+<!--- these are just some of the benefits --->
+## Why Write Inline Code Documentation?
+* Developers can more easily read and understand individual classes, methods, functions... etc
+* Can generate html formatted documentation directly from the source code which is easier to keep up to date
+* It is much easier to write code comments along the way, rather than trying to go back and add them later
+
+---
+# Inline Code Documentation
+## Intended User: API Developer
+* make life easier for you as a developer.
+* clearly defines input, output and a description of the function.
+* This is good for coming back to a piece of code in the future and troubleshooting.
+* Also good for code review in a team setting.
+---
+# Javadoc
+Javadoc was created by Sun Microsystems for the Java language
+* It's fairly easy to read and write
+* Many IDE's and text editors will recognize the syntax and help autocomplete/color code
+* Can be used to generate documentation by scanning the code base
+```java
+/**
+ * Validates a chess move.
+ *
+ * <p>Use {@link #doMove(int theFromFile, int theFromRank, int theToFile, int theToRank)} to move a piece.
+ *
+ * @param theFromFile file from which a piece is being moved
+ * @param theFromRank rank from which a piece is being moved
+ * @param theToFile   file to which a piece is being moved
+ * @param theToRank   rank to which a piece is being moved
+ * @return            true if the move is valid, otherwise false
+ * @since             1.0
+ */
+boolean isValidMove(int theFromFile, int theFromRank, int theToFile, int theToRank) {
+    // ...body
+}
+```
+---
+  Examples
+  ## PHP
+  ```PHP
+  /**
+    * Gets the identified user record
+    * [GET] /users/{slug}
+    * @param string $slug Slug of user to get
+    *
+    * @return object Returns the user object.
+    **/
+    public function getUserAction($slug)
+     {
+         $user = getUser($slug);
+         return json_encode($user)
+     }
+  ```
+---
+# JSDoc
+* JSDoc http://usejsdoc.org/
+* Similar to Javadoc or phpDocumentor
+* Extensions are available for several editors / IDEs
+* Can be installed globally or as a project dev dependency
+---
+## Install Globally with NPM
+```bash
+npm install -g jsdoc
+```
+## Generate Documentation
+Each time you want to create or update the html documentation, run the executable
+```bash
+jsdoc src -r -c ./jsdoc.json -d docs
+open ./docs/index.html
+```
+---
+# Common JSDoc Tags
+* The @param tag provides the name, type, and description of a function parameter.
+* The @returns tag documents the value that a function returns.
+* The @since tag indicates that a class, method, or other symbol was added in a specific version.
+* The @inheritdoc tag indicates that a symbol should inherit its documentation from its parent class.
+* The @async tag indicates that a function is asynchronous.
+<!---
+ In this example it would be good to note that the order of the tags doesn't matter
+ however it makes logical sense to others to read them in this order.
+--->
+```javascript
+/**
+ * Returns the sum of a and b
+ * @param {number} a
+ * @param {number} b
+ * @returns {number}
+ * @since 1.0.1
+ */
+function sum(a, b) {
+    return a + b;
+}
+```
+---
+# Exercise: Lets Add Documentation!
+documentation-demo in the labs
+---
+# API Spec Sheets
+## Intended User: API Developer/Designer
+This is a technical document that details all endpoints, responses, parameters and examples of an api.
+Used when planning and building an API.
+
+Contains info about the following:
+* endpoints
+* allowed http actions
+* fields
+* response objects
+* content types
+* YAML, JSON etc...
+---
+__Story Time!__
+.right[![Right-aligned image](/resources/class2/realapispec.png)]
+* 35+ endpoints
+* we create api spec
+* customer built it
+* we use it in web application
+---
+Tool for building API Specs:  https://editor.swagger.io/#
+
+.right[![Right-aligned image](/resources/class2/swagger.png)]
+---
+# Exercise: Lets Add Documentation!
+Create a spec sheet for the api.
+
+Back to the cars api!
+---
+# Swagger JSDoc
+* Allows inline code documentation for a REST API
+* Parses swagger syntax from JSDoc tags
+* Creates a OpenAPI (Swagger) specification file
+## Install Globally with NPM
+```bash
+npm install swagger-jsdoc -g
+```
+---
+## Create/Edit swaggerDef.js in the project root
+```javascript
+module.exports = {
+  info: {
+    // API information (required)
+    title: 'Hello World', // Title (required)
+    version: '1.0.0', // Version (required)
+    description: 'A sample API', // Description (optional)
+  },
+  host: `http://localhost:8080`, // Host (optional)
+  basePath: '/', // Base path (optional)
+};
+```
+---
+## Generate Swagger File
+```bash
+swagger-jsdoc -d swaggerDef.js ./src/**.js
+```
+## Visit https://editor.swagger.io/ and copy/pasta or import your swagger.json file
+---
+# Documentation Websites
+## Intended User: customers, prospective customers, developers, users etc...
+A good documentation site will drive developers to your api, but a bad one will actively drive them away.
+Parts of a good API Documentatio site:
+* quickstart guide
+* endpoint list
+* endpoint documentation with examples
+* authentication guide
+* sample code
+* error handling/troubleshooting guide
+* tutorials
+---
+# Example Documentation Site:
+
+Twilio: Phone Service API Provider
+https://www.twilio.com/docs/usage/api
+* Overview: https://www.twilio.com/docs/sms
+* Endpoint Overview: https://www.twilio.com/docs/sms/api/message
+* Tutorial: https://www.twilio.com/docs/usage/tutorials/how-to-set-up-your-php-development-environment
+* Troubleshooting: https://www.twilio.com/docs/usage/troubleshooting/debugging-your-application
+* Auth/Setup: https://www.twilio.com/docs/usage/api
+
+RESTCountries
+* https://restcountries.eu
+This is a markdown file converted into HTML via a generator tool.
+* Flatdoc http://ricostacruz.com/flatdoc/
+---
+
+# Documentation.js
+* Uses JSDoc formatting so either tool can be used on the same project
+* Since it uses JSDoc all the editor plugins are compatible
+* Can be installed globally or as a project dev dependency
+## Install Globally with NPM
+```bash
+npm install -g documentation
+```
+
+## Generate Documentation
+Each time you want to create or update the html documentation, run the executable
+```bash
+documentation build src/** -f html -o docs
+open ./docs/index.html
+```
+---
+## Documentation.js can also serve, and live-update HTML docs
+```bash
+documentation.js serve --watch src/** -f html
+```
+---
+# Changelogs / Release Notes
+A record of changes and updates made to the system.  Usually published when a new release/version of the project is made public.
+
+## Example Release Notes:
+Version 1.0.10 Release Notes:
+A new endpoint for "packages" was created.
+__Breaking Changes:__ The field "delivery attempted" was removed from the "deliveries" endpoint.
+
+Real Example: https://www.twilio.com/docs/voice/voip-sdk/ios/changelog
+
+---
+# Changes to the API
+* Things change
+* New features are added
+* Bugs are found & fixed
+* Deprecate old code
+
+How do we indicate this to someone consuming our API?
+
+---
+# Semantic Versioning!
+https://semver.org/
+
+Semantic versioning is an intuitave way of indicating the nature of patches released to the system.
+
+Major.Minor.Patch
+Ex: v1.8.9
+* Major Version 1
+* Minor Version 8
+* Patch 10
+---
+# Version Types
+Ex: v1.8.9
+* Patch
+  * Bugfix (backwards compatible)
+* Minor Version
+  * New Feature (backwards compatible)
+* Major Version
+  * Any change not backwards compatible
+---
+# Version Numbers
+Ex: v1.8.9
+* Major version 0 is pre-release, development/alpha/beta testing.
+* Each increment increases in increments of 1.
+* When a bug is fixed that maintains backwards compatibility, increase patch number.
+* When a new feature is added that maintains backwards compatibility, increase the minor version number
+* When any changes break backwards compatibility, increment the major version number.
+* When incrementing a version number, reset any versions "smaller" (to the right) to 0.
+
+
+__Note:__ These are not decimals.  it is possible to have numbers > 10
+
+1.10.42 is a valid version number.
+---
+# Lets look at a commit chain and establish some version numbers.
+* vx.y.z : initial commit
+* vx.y.z : started adding features
+* vx.y.z : bugfix
+* vx.y.z : bugfix
+* vx.y.z : new feature
+* vx.y.z : First Release for public use!
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : feature deprecated
+* vx.y.z : feature removed
+
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* vx.y.z : started adding features
+* vx.y.z : bugfix
+* vx.y.z : bugfix
+* vx.y.z : new feature
+* vx.y.z : First Release for public use!
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : feature deprecated
+* vx.y.z : feature removed
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* v0.1.0 : started adding features
+* vx.y.z : bugfix
+* vx.y.z : bugfix
+* vx.y.z : new feature
+* vx.y.z : First Release for public use!
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : feature deprecated
+* vx.y.z : feature removed
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* v0.1.0 : started adding features
+* v0.1.1 : bugfix
+* vx.y.z : bugfix
+* vx.y.z : new feature
+* vx.y.z : First Release for public use!
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : feature deprecated
+* vx.y.z : feature removed
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* v0.1.0 : started adding features
+* v0.1.1 : bugfix
+* v0.1.2 : bugfix
+* vx.y.z : new feature
+* vx.y.z : First Release for public use!
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : feature deprecated
+* vx.y.z : feature removed
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* v0.1.0 : started adding features
+* v0.1.1 : bugfix
+* v0.1.2 : bugfix
+* v0.2.0 : new feature
+* vx.y.z : First Release for public use!
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : feature deprecated
+* vx.y.z : feature removed
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* v0.1.0 : started adding features
+* v0.1.1 : bugfix
+* v0.1.2 : bugfix
+* v0.2.0 : new feature
+* v1.0.0 : First Release for public use!
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : feature deprecated
+* vx.y.z : feature removed
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* v0.1.0 : started adding features
+* v0.1.1 : bugfix
+* v0.1.2 : bugfix
+* v0.2.0 : new feature
+* v1.0.0 : First Release for public use!
+* v1.1.0 : new feature
+* vx.y.z : bugfix
+* vx.y.z : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : feature deprecated
+* vx.y.z : feature removed
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* v0.1.0 : started adding features
+* v0.1.1 : bugfix
+* v0.1.2 : bugfix
+* v0.2.0 : new feature
+* v1.0.0 : First Release for public use!
+* v1.1.0 : new feature
+* v1.1.1 : bugfix
+* vx.y.z : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : feature deprecated
+* vx.y.z : feature removed
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* v0.1.0 : started adding features
+* v0.1.1 : bugfix
+* v0.1.2 : bugfix
+* v0.2.0 : new feature
+* v1.0.0 : First Release for public use!
+* v1.1.0 : new feature
+* v1.1.1 : bugfix
+* v2.0.0 : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* vx.y.z : new feature
+* vx.y.z : bugfix
+* vx.y.z : feature deprecated
+* vx.y.z : feature removed
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* v0.1.0 : started adding features
+* v0.1.1 : bugfix
+* v0.1.2 : bugfix
+* v0.2.0 : new feature
+* v1.0.0 : First Release for public use!
+* v1.1.0 : new feature
+* v1.1.1 : bugfix
+* v2.0.0 : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* v2.1.0 : new feature
+* vx.y.z : bugfix
+* vx.y.z : feature deprecated
+* vx.y.z : feature removed
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* v0.1.0 : started adding features
+* v0.1.1 : bugfix
+* v0.1.2 : bugfix
+* v0.2.0 : new feature
+* v1.0.0 : First Release for public use!
+* v1.1.0 : new feature
+* v1.1.1 : bugfix
+* v2.0.0 : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* v2.1.0 : new feature
+* v2.1.1: bugfix
+* vx.y.z : feature deprecated
+* vx.y.z : feature removed
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* v0.1.0 : started adding features
+* v0.1.1 : bugfix
+* v0.1.2 : bugfix
+* v0.2.0 : new feature
+* v1.0.0 : First Release for public use!
+* v1.1.0 : new feature
+* v1.1.1 : bugfix
+* v2.0.0 : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* v2.1.0 : new feature
+* v2.1.1: bugfix
+* v2.2.0 : feature deprecated
+* vx.y.z : feature removed
+---
+# Lets look at a commit chain and establish some version numbers.
+* v0.0.0 : initial commit
+* v0.1.0 : started adding features
+* v0.1.1 : bugfix
+* v0.1.2 : bugfix
+* v0.2.0 : new feature
+* v1.0.0 : First Release for public use!
+* v1.1.0 : new feature
+* v1.1.1 : bugfix
+* v2.0.0 : major problem discovered.  Rebuilding underlying data structure and api endpoints to match new data format.
+* v2.1.0 : new feature
+* v2.1.1: bugfix
+* v2.2.0 : feature deprecated
+* v3.0.0 : feature removed
+---
+
+# Indicating Version in REST
+Several ways to include version information in a REST api.
+* URL route
+* URL query parameter
+* Request Headers
+---
+# Via URL (most common)
+Major version number added to the url.
+
+https://restcountries.eu/rest/v2/
+
+## Pros:
+
+* straightforward
+* easy to see what version is being used
+* simple to build.
+
+## Cons:
+
+* breaking changes cause who new urls to be needed.
+* minor, patch versions not indicated.
+* potentially need several instances of the api to be 'live'
+---
+# Via Query Parameter
+Major version added as query parameter
+http://api.example.com/literature/books?version=1
+
+## Pros:
+
+* easy to default if not provided
+
+## Cons:
+
+* complicated routing.
+* each endpoint needs to care about version and perform different logic accordingly
+* minor, patch versions not indicated
+
+---
+# Custom Request Headers
+Full version added as custom http request header
+```Bash
+curl -H “version: 1.0.1”
+http://api.example.com/literature/books
+```
+## Pros:
+* Most specific
+* includes minor and patch versions
+
+## Cons:
+* more complicated on API side
+* more complicated on Client side
+---
+# Technical Versioning !== Product/Marketing Versioning
+Two types of versioning.
+1. Technical versioning (semantic versioning)
+2. Product versioning (marketing)
+
+
+Ex: Windows NT
+https://en.wikipedia.org/wiki/Windows_NT#Releases
+---
+# Recap
+## Documentation
+* Inline
+* API Spec Sheets
+* Public Web Documentation
+* Changelogs
+* Generator Tools
+* Versioning
+---
+  </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
