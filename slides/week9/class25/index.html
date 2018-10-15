@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      img{
+        max-width: 100%;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+# Report Generation
+
+---
+# Report Generation
+
+* Generating Reports goes hand in hand with the data analysis pipeline that we already discussed.
+* Can be considered part of the "automation / computation" step
+* You could also just be asked to generate reports outside of the data analysis lifecycle.
+---
+# Common reports you may see:
+* Sales Reports
+* Efficiency Reports
+* Time Tracking
+* Sprint Burndown
+* etc...
+---
+# Report Dashboards
+Web page featuring a collection of multiple reports
+
+.center[![Center-aligned image](https://www.elastic.co/guide/en/kibana/current/images/tutorial-sample-dashboard.png)]
+---
+# Lets build a dashboard.
+* I own a used car dealership.
+* Team of 10 salespeople.
+* Monthly sales data.
+
+## Visualizations Needed:
+* number of cars sold (number)
+* total profit (number)(base price + accessories - taxes)
+* sales person rankings (table)(sort by $$ sold, include # sold, revenue brought in, total commissions)
+* car manufacturer rankings (chart) (# sold)
+* top 10 cars sold (chart) (# of same make/model sold)
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
