@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      img{
+        max-width: 100%;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+# Report Generation
+
+---
+# This morning:
+Continue working on yesterday's project.
+---
+# Lets build a dashboard.
+* I own a used car dealership.
+* Team of 10 salespeople.
+* Monthly sales data.
+
+## Visualizations Needed:
+* number of cars sold (number)
+* total profit (number)(base price + accessories - taxes)
+* sales person rankings (table)(sort by $$ sold, include # sold, revenue brought in, total commissions)
+* car manufacturer rankings (chart) (# sold)
+* top 10 cars sold (chart) (# of same make/model sold)
+---
+# Elasticsesarch & Kibana
+## Elasticsearch:
+* Rest style data store for indexing documents to search against.
+* https://www.elastic.co/downloads/elasticsearch
+```Bash
+cd elasticsearch-versionnumber
+./bin/elasticsearch
+```
+## Kibana
+* Visualization interface for Elasticsearch.
+* kibana: https://www.elastic.co/downloads/kibana
+
+In a new terminal tab (keep elastic running.)
+```Bash
+cd kibana-versionnumber
+./bin/kibana
+```
+---
+# Visit in browser
+* http://localhost:5601
+* http://localhost:5601/app/kibana#/home/tutorial_directory/sampleData?_g=()
+<br/>
+Lets Explore Kibana.
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

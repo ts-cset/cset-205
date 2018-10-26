@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      img{
+        max-width: 100%;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+# Report Generation
+
+---
+# Elastic
+## Glossary:
+* **Index:** An index is like a table in a relational database. It has a mapping which contains a type, which contains the fields in the index. An index is a logical namespace which maps to one or more primary shards and can have zero or more replica shards.
+--
+
+* **Shards:** A shard is a single Lucene instance. It is a low-level “worker” unit which is managed automatically by Elasticsearch
+  * This is where the data is stored
+--
+
+* **Document:** A document is a JSON document which is stored in Elasticsearch. It is like a row in a table in a relational database
+--
+
+* **Field:** A document contains a list of fields, or key-value pairs.
+--
+
+* **Mapping:** A mapping is like a schema definition in a relational database. Each index has a mapping, which defines a type, plus a number of index-wide settings. A mapping can either be defined explicitly, or it will be generated automatically when a document is indexed.
+---
+# Interracting with Elastic
+* Interracting with Elastic is done via a web API.
+* There are multiple pre-built clients for different languages to simplify use of the API, but they are wrappers to the actual API.
+Example:
+```Bash
+curl -X PUT "localhost:9200/customer/_doc/1?pretty" -H 'Content-Type: application/json' -d'
+{
+  "name": "John Doe"
+}
+'
+curl -X POST "localhost:9200/customer/_doc?pretty" -H 'Content-Type: application/json' -d'
+{
+  "name": "Jane Doe"
+}
+'
+```
+What is happening here?
+--
+
+* 2 new documents(record) are being inserted into the customer index(table).
+* pretty means that the output is formatted nicely
+---
+```Bash
+curl -X POST "localhost:9200/customer/_doc/1/_update?pretty" -H 'Content-Type: application/json' -d'
+{
+  "doc": { "name": "Jane Doe", "age": 20 }
+}
+'
+
+```
+What is happening here?
+--
+
+* Record #1 is being updated
+
+---
+```Bash
+curl -X DELETE "localhost:9200/customer/_doc/2?pretty"
+```
+What is happening here?
+--
+
+* Record #2 is being deleted.
+---
+```Bash
+curl -X POST "localhost:9200/customer/_doc/_bulk?pretty" -H 'Content-Type: application/json' -d'
+{"update":{"_id":"1"}}
+{"doc": { "name": "John Doe becomes Jane Doe" } }
+{"delete":{"_id":"2"}}
+'
+
+```
+What is happening here?
+--
+
+* record 1: name field updated
+* record 2: deleted
+---
+```Bash
+curl -H "Content-Type: application/json" -XPOST "localhost:9200/bank/_doc/_bulk?pretty&refresh" --data-binary "@accounts.json"
+curl "localhost:9200/_cat/indices?v"
+```
+What is happening here?
+--
+
+* Bulk create records via file upload
+* confirm that file uploaded successfully
+---
+# Searching for data in Elastic:
+Lets go through this documentation / guide together.
+https://www.elastic.co/guide/en/elasticsearch/reference/current/_exploring_your_data.html
+---
+# Class Exercise:
+Lets write a python script to index our salespeople data from earlier this week.
+
+Some useful snipets:
+```Python
+# read data from a json file
+import json
+with open('data.json') as f:
+    data = json.load(f)
+    print(data)
+```
+```Python
+# write data to a text file
+text_file = open("Output.txt", "w")
+text_file.write("Purchase Amount: %s" % TotalAmount)
+text_file.close()
+```
+---
+# Kibana
+## Glossary:
+* Visualization: A chart / graphical representation of data
+* Dashboard: A collection of charts
+---
+# Class Exercise:
+Lets visualize the salespeople data
+---
+# Exercise:
+* Write a python script to import sales data into elastic
+* Create visualizations from Monday's class in Kibana
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
