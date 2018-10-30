@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      img{
+        max-width: 100%;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+# Object Oriented Code
+Resources: https://realpython.com/python3-object-oriented-programming/
+---
+
+# What Is Object Oriented Programming?
+* Code that is focused around objects.
+  * Objects can have data (fields)
+  * Objects can have procedures (methods/functions)
+  * Objects can inherit / extend other objects.
+* Languages that use Object Oriented Programming
+  * Java
+  * C++
+  * PHP (optional)
+  * JavaScript (optional)
+  * Python (optional)
+  * several others...
+---
+# Classes:
+* Different languages define basic object types / data structures
+  * Python: list, dict, str, int, boolean
+* We can define more complicated objects, called Classes.
+* Classes are used to represent more complex data structures.
+* Think of a class like a template or scaffold for what an object should look like.
+
+```Python
+# Python 3:
+class Dog:
+    pass
+
+# Python 2:
+class Dog(object):
+    pass
+```
+Note: pass is the python version of a placeholder statement.  It aknowledges that code needs to go here, but has not yet been created.
+---
+# Attributes (fields)
+* Attributes / properties are the fields on an object.
+  * can be other classes
+  * data structures (list, dict)
+  * native data types (int, str etc...)
+
+```Python
+class Dog:
+
+  species = 'mammal'
+
+  # Initializer / Instance Attributes
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+```
+* Class Dog: Data Structure defining what a dog is
+* Self: individual instance of a Dog
+---
+# Instantiating Object
+* Instantiate = create a new object.
+
+```Python
+class Dog:
+  pass
+
+a = Dog()
+b = Dog()
+a == b
+```
+What are we doing here?
+* Create empty Dog class
+* Create 2 instances of dog (a & b)
+* Compare a == b
+  * Will this be true / false?
+--
+
+  * False, because they are 2 distinct instances of the Dog class.
+---
+# Determining the type of an object
+* Type represents what a piece of data is.
+* Built in types: int, str, dict, list
+* Custom classes: Dog, Cat, Car, Square, User
+
+```Python
+class Dog:
+  pass
+a = 5
+b = "hello there"
+c = True
+d = [1, 2, 3, 4]
+e = {"position": 5, "vowel": True}
+f = Dog()
+print type(a)
+print type(b)
+print type(c)
+print type(d)
+print type(e)
+print type(f)
+```
+What do we expect for each print statement?
+---
+# More involved example
+```Python
+class Dog:
+
+    # Class Attribute
+    species = 'mammal'
+
+    # Initializer / Instance Attributes
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+
+# Instantiate the Dog object
+philo = Dog("Philo", 5)
+mikey = Dog("Mikey", 6)
+
+# Access the instance attributes
+print("{} is {} and {} is {}.".format(
+    philo.name, philo.age, mikey.name, mikey.age))
+
+# Is Philo a mammal?
+if philo.species == "mammal":
+    print("{0} is a {1}!".format(philo.name, philo.species
+```
+---
+# Methods
+* Methods are used to get and perform operations on the fields of an object.
+* In python, the first argument is always "self
+
+```Python
+class Dog:
+
+    # Class Attribute
+    species = 'mammal'
+
+    # Initializer / Instance Attributes
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+      return "name: {}, age: {} ".format(self.name, self.age)
+
+    # instance method
+    def description(self):
+        return "{} is {} years old".format(self.name, self.age)
+
+    # instance method
+    def speak(self, sound):
+        return "{} says {}".format(self.name, sound)
+
+# Instantiate the Dog object
+mikey = Dog("Mikey", 6)
+
+# call our instance methods
+print(mikey.description())
+print(mikey.speak("Gruff Gruff"))```
+---
+# Special Methods
+* __init__(self): This is the constructor / initializer function
+  * run as soon as an instance is created.
+  * perform setup of the object instance.
+  * set attributes (fields)
+  * perform any needed operations to set the attributes
+* __str__(self): This is the "To String" function.
+  * Translates the variable into a string for printing or rendering.
+---
+# Updating Attributes
+* You can modify properties (attrbitues / fields) of an instance of a class.
+* Values can be modified either directly, or via a method.
+  * That is a feature of Python.
+  * Other languages use getter / setter functions to fetch and modify values.
+
+---
+
+```Python
+class Dog:
+
+    # Class Attribute
+    species = 'mammal'
+
+    # Initializer / Instance Attributes
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    # instance method
+    def birthday_party(self):
+        self.age = self.age + 1
+
+# Instantiate the Dog object
+mikey = Dog("Mikey", 6)
+# increment the age by 1:
+mikey.birthday_party()
+print(mikey.age)
+# or
+mikey.age = mikey.age + 1
+print(mikey.age)
+```
+---
+# Inheritance
+* This allows you to 'extend' a class to have additional functionality / methods / properties.
+* The concept of parent / child classes
+---
+
+# Example:
+
+```Python
+class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+  def __str__(self):
+    return "Name: {}, Age: {}".format(self.name, self.age)
+
+class Employee(Person):
+  def __init__(self, name, age, occupation):
+    Person.__init__(self, name, age)
+    self.occupation = occupation
+
+class Customer(Person):
+  def __init__(self, name, age, budget):
+    Person.__init__(self, name, age)
+    self.budget = budget
+  def __str__(self):
+    person_string = Person.__str__(self)
+    return person_string + ", Budget: {}".format(self.budget)
+
+generic_person = Person("Steve", 42)
+worker = Employee("Sam", 21, "Cashier")
+guest = Customer("Andrea", 61, "$100")
+
+print(generic_person)
+print(worker)
+print(guest)
+```
+---
+# Example PHP:
+
+```PHP
+class Vegetable {
+
+   var $edible;
+   var $color;
+
+   function __construct($edible, $color="green")
+   {
+       $this->edible = $edible;
+       $this->color = $color;
+   }
+
+   function is_edible()
+   {
+       return $this->edible;
+   }
+
+   function what_color()
+   {
+       return $this->color;
+   }
+
+} // end of class Vegetable
+```
+---
+```PHP
+// extends the base class
+class Spinach extends Vegetable {
+
+   var $cooked = false;
+
+   function __construct()
+   {
+       parent::__construct(true, "green");
+   }
+
+   function cook_it()
+   {
+       $this->cooked = true;
+   }
+
+   function is_cooked()
+   {
+       return $this->cooked;
+   }
+
+} // end of class Spinach
+
+```
+---
+# Abstract Classes (Interfaces in Java-land)
+* Define what an object is, without implementing it.
+* Used to set method definitions in stone
+* No class level variables (In some languages)
+---
+# Example:
+```Python
+import abc
+
+class Vehicle(abc.ABC):
+    @abc.abstractmethod
+    def go(self):
+        pass
+
+class Bicycle(Vehicle):
+    def go(self):
+        print("Biking around at 7 MPH")
+class Car(Vehicle):
+    def go(self):
+        print("Cruising down the interstatee at 75 MPH")
+class Airplane(Vehicle):
+    def go(self):
+        print("Flying away at 570 MPH")
+
+# generic_vehicle = Vehicle()
+bike = Bicycle()
+mustang = Car()
+boeing = Airplane()
+
+bike.go()
+mustang.go()
+boeing.go()
+
+```
+---
+# Example #2
+```PHP
+<?php
+// Declare the interface 'iTemplate'
+interface iTemplate
+{
+    public function setVariable($name, $var);
+    public function getHtml($template);
+}
+
+// Implement the interface
+class Template implements iTemplate
+{
+    private $vars = array();
+
+    public function setVariable($name, $var)
+    {
+        $this->vars[$name] = $var;
+    }
+    public function getHtml($template)
+    {
+        foreach($this->vars as $name => $value) {
+            $template = str_replace('{' . $name . '}', $value, $template);
+        }
+        return $template;
+    }
+}
+```
+---
+# Exercise
+Create class structure for the following items.
+* Writing Implement (Interface)
+* Pencil (class)
+* Wooden Pencil (child class)
+* Mechanical Pencil (child class)
+* Pen (class)
+* Ballpoint (child class)
+* Fountain (child class)
+* Marker (class)
+* Sharpie (child class)
+* Hi Liter
+
+You can define what methods & attributes each should have.
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
