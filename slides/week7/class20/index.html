@@ -3,18 +3,8 @@
   <head>
     <title>Title</title>
     <meta charset="utf-8">
-    <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+    <link rel="stylesheet" type="text/css" href="../../slides.css"/>
 
-      body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
   </head>
   <body>
     <textarea id="source">
@@ -25,12 +15,12 @@ Data Analysys & Machine Learning go hand-in-hand.  BUT, data analysis and statis
 <br/><br/>
 http://www.smbc-comics.com/comics/1538492931-20181002.png
 ---
-# Python!
+## Python!
 ---
 .center[![Center-aligned image](https://imgs.xkcd.com/comics/python.png
 )]
 ---
-# Python Language
+## Python Language
 * IEEE Ranked Python as #1 language in 2018
   * https://spectrum.ieee.org/at-work/innovation/the-2018-top-programming-languages
 * Supports TDD (Test Driven Development)
@@ -39,34 +29,37 @@ http://www.smbc-comics.com/comics/1538492931-20181002.png
 * Object Oriented
 * Frameworks to build applications
 ---
-# Python3
+## Python3
 * Python3 is the current version of python.
-* many people still use Python2 out of stubbornness despite being end-of-lifed
+* many people still use Python2 despite being end-of-lifed
+* common reasons for still using Python2:
+  * stubbornness
+  * legacy code
+  * package availability (less of a problem as python 3 has aged)
 ---
-# Packages!
+## Packages!
 * Packages are managed via pip
 * pip is the Python package manager.
-<br/><br/>
-Example Packages:
-* numpy
-* matplotlib
-* flask
-* sqlalchemy
-* scipy
+* Example Packages:
+  * numpy
+  * matplotlib
+  * flask
+  * sqlalchemy
+  * scipy
 ---
-# Dependencies!
+## Dependencies!
 Python is a world of dependencies, and that can cause Problems.
 <br/><br/>
 Enter Virtual Environments.
 * Virtual Environments is a "sandbox" where you can install packages to that specific directory, rather than to the global python instance.
 ---
-# Data Analysis with Python!
+## Data Analysis with Python!
 * Matplotlib: graphing (similar to d3)
 * numpy: python math
 <br/><br/>
 These two libraries allow you to do most of wht you were doing in PHP / JS!
 ---
-# Exercise Time:
+## Exercise Time:
 1. install python 3.7 from python's website
 2. ```Bash
 python3 -m venv myvenv
@@ -76,10 +69,10 @@ python3 -m pip install -U matplotlib
 ```
 4. https://matplotlib.org/tutorials/introductory/pyplot.html#sphx-glr-tutorials-introductory-pyplot-py
 ---
-# Exercise:
+## Exercise:
 Lets build the miami weather barchart in Python!
 ---
-# Exercise:
+## Exercise:
 Create some sort of visualization from the same census dataset from your previous lab in Python.
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">

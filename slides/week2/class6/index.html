@@ -3,18 +3,8 @@
   <head>
     <title>Title</title>
     <meta charset="utf-8">
-    <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+    <link rel="stylesheet" type="text/css" href="../../slides.css"/>
 
-      body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
   </head>
   <body>
     <textarea id="source">
@@ -29,25 +19,26 @@ class: center, middle
 4. Introduce Project
 
 ---
-# Yesterday!
+## Yesterday!
 
 * Unit Testing
 * Lab
 ---
-# Benefits of unit testing
+## Pros / Cons
+### Benefits of unit testing
 
 * know that your code works
 * know that changes do or do not affect unrelated pieces of code
 * code review can quickly verify that your code works.
 * outline of what the code should do and how it should behave.
 
-# Disadvantages/drawbacks of unit testig
+### Disadvantages/drawbacks of unit testig
 * time investment
 * individual unit tests do not guarantee that the app works as a whole
 * need to test for all possible edge cases / scenarios.
 ---
-# Yesterday's Lab
-## Review the code files
+## Yesterday's Lab
+### Review the code files
 * Namespaces
 * Autoloading Magic
 * Testing
@@ -55,14 +46,14 @@ class: center, middle
 
 ---
 
-# Error Handling:
+## Error Handling:
 * Our api is perfect, errors will never happen...
 
 --
 * ok, maybe we need some error handling.
 
 ---
-# Error Handling:
+## Error Handling:
 * error response codes should be thrown when errors happen.
 * don't always return 200 response.
   * unless you are Facebook. (they always return 200, with error details in the body...)
@@ -84,7 +75,7 @@ $app->get('/people/{id}', function (Request $request, Response $response, array 
 });
 ```
 ---
-# Error Handling Tests:
+## Error Handling Tests:
 * Need to test these new cases.
 
 ```PHP
@@ -107,9 +98,7 @@ public function testGetPersonFailed() {
 }
 ```
 ---
-# Lets look at code file again.
----
-# Lab/Assignment
+## Lab/Assignment
 Create your own Slim API.
 * For this repository as a starting point and vagrant configuration:  https://github.com/JimFeather/api-lab-template
 ## Requirements:

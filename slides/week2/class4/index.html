@@ -3,18 +3,8 @@
   <head>
     <title>Title</title>
     <meta charset="utf-8">
-    <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+    <link rel="stylesheet" type="text/css" href="../../slides.css"/>
 
-      body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
   </head>
   <body>
     <textarea id="source">
@@ -28,10 +18,10 @@ class: center, middle
 3. Introduction to Slim (PHP Framework)
 
 ---
-# Last Week in Review
+## Last Week in Review
 
 ---
-# APIs
+## APIs
 * What is an API?
 
 --
@@ -52,11 +42,7 @@ class: center, middle
 
 * CURL, what is it?
 ---
-# RESTful APIs
-* What is REST?
-
---
-
+## RESTful APIs
 * 6 principles of a RESTful API?
 
 --
@@ -81,7 +67,6 @@ class: center, middle
 --
 
 * Strategies for Authentication
-
 --
 
   * Basic Auth
@@ -89,20 +74,19 @@ class: center, middle
   * OAuth
 
 ---
-
-# Documentation
+## Documentation
 * 4 Types of documentation
 
 --
+## Documentation
 
   * Inline Code Documentation
   * API Spec Sheets
   * Public documentatino websites
   * changelogs
 
---
-
-# Semantic Versioning
+---
+## Semantic Versioning
 * Version Numbers
 
 --
@@ -111,24 +95,24 @@ class: center, middle
   * Minor
   * patch
 ---
-# Virtualbox / Vagrant
+## Virtualbox / Vagrant
 * Benefits of server / dev environment management?
 * vagrant command to create server?
 * vagrant command to shut down/delete server?
 * vagrant command to ssh into server?
 ---
-# PHP
+## PHP
 * powers most of the internet.
 * programming language
 ---
-# New Business
+## New Business
 ---
-# PHP
+## PHP
 .center[![Center-aligned image](http://php.net/images/logos/new-php-logo.png)]
 
 Exercise:  https://www.learn-php.org/
 ---
-# Tracking Errors in PHP / Apache
+## Tracking Errors in PHP / Apache
 * Sometime errors will be displayed to the browser.
 * Errors also written to the Apache Error Log.
 ```Bash
@@ -141,20 +125,19 @@ tail -f /var/log/apache2/access.log
 ```
 * access logs (shows traffic)
 ---
-
-# Composer
+## Composer
 .center[![Center-aligned image](https://getcomposer.org/img/logo-composer-transparent.png)]
 
 * This is the NPM of the PHP world.
 * PHP package manager.
-
-Benefits of composer:
+---
+## Benefits of composer:
 * manage dependencies
 * version lock dependencies
 * autoloader automatically brings dependencies and custom scripts into your application
 * ease of updating dependenceis
 ---
-# Using Composer:
+## Using Composer:
 * More JSON Files!
 composer.json
 ```Javascript
@@ -169,12 +152,11 @@ composer.json
 * dependencies are downloaded to a /vendor directory
 * gitignore the /vendor directory, otherwise all dependencies will be stored in your repo.
 ---
-
-# Slim
+## Slim
 * PHP framework for building apis and web applications.
 
 ---
-# Lets start a Slim project.
+## Lets start a Slim project.
 From your labs/virtualMachines directory:
 
 --
@@ -191,8 +173,7 @@ vagrant ssh
 ```
 
 ---
-
-# Directory Setup
+## Directory Setup
 * Change directory to your working code directory
   * This is configured as a shared directory with your Mac.  It matches the virtualMachines directory.
 
@@ -207,8 +188,7 @@ mkdir firstSlim
 ```
 
 ---
-
-# Install Slim via Composer.
+## Install Slim via Composer.
 
 ```Bash
 composer require slim/slim
@@ -218,21 +198,20 @@ composer install
 * This directory is automatically created via composer install, so it should be excluded from git via gitignore.
 * created 'composer.json' and 'composer.lock' files
 ---
-
-# Code time!
+## Code time!
 
 * create index.php in firstSlim directory
 
 ---
-# index.php
+## index.php
 Lets build the php code from scratch!
 ---
-# Empty PHP file
+## Empty PHP file
 ```PHP
 <?php
 ```
 ---
-# Bring in dependencies
+## Bring in dependencies
 ```PHP
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
@@ -242,7 +221,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 * located in 'vendor/psr/http-message/src'
 * This allows us to use the Request and Response objects in our code.
 ---
-# autoload
+## autoload
 ```PHP
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
@@ -253,7 +232,7 @@ require './vendor/autoload.php';
 * autoload.php is part of composer.
 * It allows you to automatically pull in scripts and classes without having to manually import them.
 ---
-# Create slim application
+## Create slim application
 
 ```PHP
 <?php
@@ -266,7 +245,7 @@ $app = new \Slim\App;
 ```
 * $app is our instance of slim.
 ---
-# Create a request handler
+## Create a request handler
 ```PHP
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
@@ -284,7 +263,7 @@ $app->get('/hello/{name}', function (Request $request, Response $response, array
 * {name} in the url indicates what the argument will be called.
 * $response->getBody()->write("Hello, $name"); adds the text "Hello, $name" to the response.
 ---
-# Finish out the app
+## Finish out the app
 ```PHP
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
@@ -306,14 +285,14 @@ $app->run();
 * This tells PHP to run the slim app.
 
 ---
-# Lets see it in action!
+## Lets see it in action!
 Visit the following url with your name instead of 'your name here':
 http://192.168.33.10/firstSlim/hello/your_name_here
 
 ---
-# Questions, confuion?
+## Questions, confuion?
 ---
-# Lets turn this into an API
+## Lets turn this into an API
 
 --
 
@@ -372,12 +351,12 @@ $app->get('/people', function (Request $request, Response $response) {
 });
 ```
 ---
-# Lets test it!
+## Lets test it!
 http://192.168.33.10/firstSlim/people
 
 --
 
-#Lets see it in action!
+## Lets see it in action!
 http://192.168.33.10/slimExampleClient/
 ---
 ## Step 4: New endpoints!

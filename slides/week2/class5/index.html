@@ -3,18 +3,8 @@
   <head>
     <title>Title</title>
     <meta charset="utf-8">
-    <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+    <link rel="stylesheet" type="text/css" href="../../slides.css"/>
 
-      body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
   </head>
   <body>
     <textarea id="source">
@@ -28,12 +18,12 @@ class: center, middle
 3. Unit Testing
 
 ---
-# Yesterday!
+## Yesterday!
 * PHP
 * Composer
 * SLIM
 ---
-# Yesterday's Lab
+## Yesterday's Lab
 Endpoints From Class:
 ```PHP
 $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
@@ -53,7 +43,7 @@ $app->get('/people', function (Request $request, Response $response) {
 });
 ```
 ---
-# Endpoints from Lab Assignment:
+## Endpoints from Lab Assignment:
 
 Get Person by Id
 ```PHP
@@ -73,7 +63,7 @@ $app->get('/people/{id}', function (Request $request, Response $response, array 
 curl http://192.168.33.10/firstSlim/people/7
 ```
 ---
-Update Person by Id
+## Update Person by Id
 ```PHP
 $app->put('/people/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
@@ -103,7 +93,7 @@ $app->put('/people/{id}', function (Request $request, Response $response, array 
 });
 ```
 ---
-* Test it:
+## Test it:
 
 ```Bash
 curl -X PUT \
@@ -114,7 +104,7 @@ curl -X PUT \
   -d 'name=Douglas%20Adams&age=49&occupation=author'
 ```
 ---
-Delete Person by Id:
+## Delete Person by Id:
 ```PHP
 $app->delete('/people/{id}', function (Request $request, Response $response, array $args) {
   $id = $args['id'];
@@ -132,7 +122,7 @@ $app->delete('/people/{id}', function (Request $request, Response $response, arr
 curl -X DELETE  http://192.168.33.10/firstSlim/people/6
 ```
 ---
-# Speaking of testing things...
+## Speaking of testing things...
 --
 Unit Testing!
 * What is unit testing?
@@ -150,7 +140,7 @@ Unit Testing!
   * code review / pull requests:  allows coworksers to quickly verify that the code works
   * you can build out tests so that you always check the same conditions.
 ---
-# Advantages of unit testing:
+## Advantages of unit testing:
 * find problems faster
   * If there is a bug in your code, having tests will make that bug more obvious
   * Missing or missed pieces of functionality
@@ -159,14 +149,14 @@ Unit Testing!
 * Set a definite end goal for the code.
   * If you write tests before the actual code, then you know that you are 'done' writing code when the tests pass.
 ---
-# Disadvantage of unit testing
+## Disadvantage of unit testing
 * each possible outcome needs a test (potential for a lot of code)
 * need to spend time to think through your functions before they are built
 * time consuming
 * test pieces separately does not ensure that the whole system will work.
 * poor test data
 ---
-# Example with 2 unit tests:
+## Example with 2 unit tests:
 * Unit test 1: assert that I can open a door with my hand
 * Unit test 2: Assert that I can engage a bolt lock with my hand
 
@@ -175,18 +165,18 @@ Unit Testing!
 .center[![Center-aligned image](http://i.imgur.com/0T9s95E.gif)]
 ---
 
-# Missing Test:
+## Missing Test:
 
 * Engaging the lock prevents me from opening the door.
 ---
-# Test Driven Development
+## Test Driven Development
 * Write tests first
 * Write code to satisfy the tests
 * know when code is finished,
 * forces you to think through your code before you write it.
 * it is not uncommon to spend as much time writing tests as actual code, if not more.
 ---
-# Testing in PHP
+## Testing in PHP
 * PHPUnit.
 * PHPUnit is a unit testing framework for PHP applications.
 Words to know:
@@ -194,7 +184,7 @@ Words to know:
 * Mock: stub/recreation of a piece of code for the purposes of testing
 
 ---
-# Lets build some tests for our Slim People API
+## Lets build some tests for our Slim People API
 * Changes to the vagrant box.
   * updated to php version 7.1 to fix dependency issues.
 
@@ -206,7 +196,7 @@ cd /var/www/public/firstSlim
 composer require --dev phpunit/phpunit
 ```
 ---
-# A few problems with index.php
+## Problems with index.php
 
 --
 
@@ -216,12 +206,13 @@ composer require --dev phpunit/phpunit
 
 --
 
-## Solution: Lets split index.php into a few files.
+### Solution: Lets split index.php into a few files.
 
 * app.php: bulk of the code.
 * index.php: database configuration and app->run()
 * will use composer.json and autoload to pull app.php into index.php for execution
 ---
+## Solution
 * rename index.php => index-old.php
 * create new index.php
 
@@ -244,9 +235,11 @@ $app->run();
 
 ```
 ---
+## Solution cont.
 * create directory 'src' in firstSlim.
 * create app.php in new src directory
 ---
+## Solution cont.
 ```PHP
 <?php
 namespace feather\firstSlim;
@@ -284,7 +277,7 @@ class App
 
 ```
 ---
-# Autoload:
+## Autoload:
 
 composer.json should be updated to look like this.
 
@@ -310,11 +303,12 @@ Execute:
 composer dump-autoload
 ```
 ---
-# visit http://192.168.33.10/firstSlim/people
-If it looks like it did yesterday then everything works. :)
+## Confirm it works
+* visit http://192.168.33.10/firstSlim/people
+* If it looks like it did yesterday then everything works. :)
 
 ---
-# Lets finally do some testing!
+## Lets finally do some testing!
 * Create directory 'tests' in firstSlim.
 * Create file 'apiTest.php'
 
@@ -330,14 +324,14 @@ class TodoTest extends TestCase
 }
 ```
 ---
-You now have a test file!
+## You now have a test file!
 ```Bash
 phpunit tests/apitest.php
 ```
 * this will execute your tests.
 * should pass, we are just asserting that true is true.
 ---
-# Some more useful tests!
+## Some more useful tests!
 ```PHP
 public function testHelloName() {
   $env = Environment::mock([
@@ -352,6 +346,7 @@ public function testHelloName() {
 }
 ```
 ---
+## Test Get People
 ```PHP
 
 // test the GET people endpoint
@@ -385,7 +380,7 @@ public function testGetPeople() {
 
 ```
 ---
-# Exercise:
+## Exercise:
 * Build tests around the other endpoints.
 
     </textarea>

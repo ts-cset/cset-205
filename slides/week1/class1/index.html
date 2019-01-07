@@ -3,18 +3,7 @@
   <head>
     <title>Title</title>
     <meta charset="utf-8">
-    <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
-
-      body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../../slides.css"/>
   </head>
   <body>
     <textarea id="source">
@@ -25,7 +14,7 @@ class: center, middle
 
 ---
 
-# Agenda
+## Agenda
 
 1. Introduction
 2. Syllabus
@@ -33,7 +22,7 @@ class: center, middle
 4. Introduction to RESTful APIs
 ---
 
-# Introduction
+## Introduction
 
 About Me:
 * Jim Feather
@@ -49,7 +38,7 @@ Types of Projects:
 * Custom Software Integrations
 
 ---
-# What you should get out of this class:
+## What you should get out of this class:
 
 * Building REST APIs that manage data in databases
 * Be able to integrate with third party platforms.
@@ -58,10 +47,10 @@ Types of Projects:
 * Use a REST API in a reporting application
 
 ---
-# Lets Get Started!
+## Lets Get Started!
 --
 
-## API
+### API
 What is an API?
 --
 Definition:
@@ -77,7 +66,7 @@ In English:
 > It is a set of functions/methods that developers use to interact with data or systems that are related to, but not necessarily part of your application.
 
 ---
-# What they are used for:
+## What they are used for:
 
 * Accessing data from a remote data set
 * Performing CRUD operations tasks on a remote data set
@@ -85,7 +74,7 @@ In English:
 * Interact with hardware
 
 ---
-# Why should I care about APIs?
+## Why should I care about APIs?
 
 * Easy - An API can make it easier to write software without a need for a deep understanding or source code of another application or library
 * Extensible - Software vendors can provide an API to allow other developers to extend their software
@@ -100,7 +89,7 @@ In English:
 * Manipulating Hardware: Android Camera API
 * GitHub
 ---
-# Common Uses of an API
+## Common Uses of an API
 
 1. Operating Systems
 2. Libraries and Frameworks
@@ -119,10 +108,11 @@ Can you identify the type of API?
 master: example
 -->
 
-# Example 1 - Operating System API
+## Example 1 - Operating System API
 
 Although Microsoft Windows is a closed source operating system, they expose operating system methods and interfaces to allow developers to utilize operating system resources. The Windows registry for example, can be read by importing the required namespace and using the `Registry` class to read values from the system.
 ---
+
 ```C
 using System;
 using Microsoft.Win32;
@@ -162,7 +152,7 @@ class Reg {
 master: example
 -->
 
-# Example 2 - Library
+## Example 2 - Library
 
 The MomentJS library is a popular tool for date/time related functions in Javascript. It can be used in client side web sites, server side and even mobile applications with tools like React Native. This library simplifies common needs like parsing dates from strings, adding and comparing dates, and formatting date objects into different output formats.
 
@@ -174,9 +164,11 @@ $ npm install moment --save
 var moment = require('moment');
 console.log(moment().format());
 ```
-
 This will output the current system time in the following format:
 > 2018-07-11T13:29:36-04:00
+
+---
+## Example 2 - Library cont.
 
 ```javascript
 var moment = require('moment');
@@ -193,7 +185,7 @@ console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
 master: example
 -->
 
-# Example 3 - Remote / Web API
+## Example 3 - Remote / Web API
 
 National Oceanic and Atmospheric Administration ( NOAA ) exposes weather data via a web service API. In this example we are fetching the current weather forecast with the grid point from this geo-point (40.039172,-76.2912167).
 
@@ -203,6 +195,7 @@ This is an easy way to fetch JSON data with a get request and format it with Pyt
     curl https://api.weather.gov/gridpoints/CTP/126,29/forecast | python -m json.tool
 ```
 ---
+## Example 3 cont.
 In this example we are setting up the options object with all the required parameters, and then performing an http request. The response is decoded to a Javascript object, and then we are printing the first "forecast".
 This is the same request as before, but in JS rather than curl.
 ```Javascript
@@ -235,7 +228,9 @@ myRequest.end();
 
 --source https://forecast-v3.weather.gov/documentation
 ---
-Results:
+## Example 3 cont.
+
+### Results:
 ```Javascript
 {
    "number":1,
@@ -254,7 +249,7 @@ Results:
 }
 ```
 ---
-# Example Time!
+## Example Time!
 
 Tool: cURL
 
@@ -272,11 +267,11 @@ curl -o example http://jsonplaceholder.typicode.com/posts
 ```
 [result](http://jsonplaceholder.typicode.com/posts)
 ---
-# REST API
+## REST API
 
-## REST: Representational State Transfer
+### REST: Representational State Transfer
 
-### What Is Rest?
+#### What Is Rest?
 Rest is a popular structure for building APIs.
 Due to their simplicity, REST apis tend to be easy to work with.
 
@@ -289,14 +284,14 @@ Due to their simplicity, REST apis tend to be easy to work with.
 6. Code on Demand (optional)
 
 ---
-# Client Server Architecture
+## Client Server Architecture
 * Separates client code from server code.
 * This increases and promotes reusability
 * Allows developer to swap out rendering interfaces without having to re-build the backend server code.
 .right[![Right-aligned image](client-server.png)]
 
 ---
-# Stateless
+## Stateless
 * The server does not store anything about previous requests (auth, history, sessions etc...).
 * Each request is stand alone
 * Each request contains all data needed to make the request.
@@ -306,7 +301,7 @@ Due to their simplicity, REST apis tend to be easy to work with.
   * request headers
 
 ---
-# Cacheable
+## Cacheable
 * REST responses should be cacheable when possible
 * reduces server load
 * reduces response time
@@ -314,25 +309,25 @@ Due to their simplicity, REST apis tend to be easy to work with.
 
 
 ---
-# Uniform Interface
+## Uniform Interface
 * All endpoints are structured the same.
 * This promotes simplicity and ease of API use.
 .center[![Center-aligned image](uniform-interface.png)]
 
 ---
-# Layered
+## Layered
 * Separation of concerns.
 * Code is split into logical segments.
 * rendering code, web requests, data handling etc...
 .center[![Center-aligned image](layered.png)]
 
 ---
-# Code On Demand
+## Code On Demand
 * Only optional guideline.
 * Ability to download code from the server to execute locally
 
 ---
-# Recap / Questions?
+## Recap / Questions?
 6 principles of building REST APIs.
 1. Client-server architecture
 2. Stateless
@@ -341,7 +336,7 @@ Due to their simplicity, REST apis tend to be easy to work with.
 5. Layered
 6. Code on Demand (optional)
 ---
-# REST URL Structure
+## REST URL Structure
 Parts of a REST URL:
 * Domain
 * Resource(s)
@@ -350,7 +345,7 @@ Parts of a REST URL:
 .center[![Center-aligned image](url-structure.png)]
 
 ---
-# REST URL Characteristics:
+## REST URL Characteristics:
 They are:
 * Are collection focused, rather than action focused. (Look for the noun)
 * Are consistent across endpoints
@@ -359,18 +354,18 @@ They are:
 .center[![Center-aligned image](url-structure.png)]
 
 ---
-# Example 1: Which is correct?
+## Example 1: Which is correct?
 Need to get the Mustang record from the system
 1. GET https://api.example.com/cars/mustang
 2. GET https://api.example.com/cars/mustang/getData
 
 --
-## 1
+### 1
 
 The GET request type implies that you are getting data, so it is not explicitly needed in the url endpoint
 
 ---
-# Example 2: Which is correct?
+## Example 2: Which is correct?
 Need to update the Mustang record in the system
 1. GET https://api.example.com/cars/mustang/update
 2. PUT https://api.example.com/cars/mustang
@@ -378,10 +373,10 @@ Need to update the Mustang record in the system
 
 --
 
-## 2
+### 2
 Number 2 is the only one that is collection focused.  The other two are action focused
 ---
-# Nested Data
+## Nested Data
 Related data can be nested into a hierarchy.
 For Example: Books can be accessed by author.
 1. GET https://api.example.com/books/catch-22
@@ -391,12 +386,12 @@ Which is correct API structure?
 
 --
 
-## Both!
+### Both!
 It depends on the context of why you are accessing Catch-22.
 If you want to just get that specific book, use \#1, but if you are accessing it through the Author, then use \#2.
 
 ---
-# Lets take a look at a production API
+## Lets take a look at a production API
 Github has a well defined, RESTful API.
 https://developer.github.com/v3
 ```bash
@@ -407,10 +402,10 @@ curl https://api.github.com/repositories/1296269
 curl https://api.github.com/repos/octocat/Hello-World
 ```
 ---
-# Hands On Time!
+## Hands On Time!
 https://github.com/ts-cset/cset-205
 ---
-# Responses
+## Responses
 * JSON or XML
 * Contains links to related objects
 * Different depending on the request type.
@@ -419,7 +414,7 @@ https://github.com/ts-cset/cset-205
   * DELETE: status code, may return some sort of success message.
 More in depth info about responses to come.
 ---
-# Authentication
+## Authentication
 Most APIs require some sort of authentication before allowing requests.
 This allows the API provider to limit permissions to administrators and serve data that should not be public knowledge.
 
@@ -433,7 +428,7 @@ curl http://api.example.com/author/vonnegut
 ```
 More in depth info about responses to come.
 ---
-# Types of Authentication
+## Types of Authentication
 * Basic Authentication: Username/password passed along with each request for validation
   * simple solution
   * less secure
@@ -445,11 +440,11 @@ More in depth info about responses to come.
   * more secure
   * More complex
 ---
-Authentication Example:
+## Authentication Example:
 Spotify API.
 https://developer.spotify.com/documentation/web-api/
 ---
-# Links and Resources
+## Links and Resources
 * https://restfulapi.net/
 * https://en.wikipedia.org/wiki/Application_programming_interface
 

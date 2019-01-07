@@ -3,18 +3,8 @@
   <head>
     <title>Title</title>
     <meta charset="utf-8">
-    <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+    <link rel="stylesheet" type="text/css" href="../../slides.css"/>
 
-      body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
   </head>
   <body>
     <textarea id="source">
@@ -23,28 +13,30 @@ class: center, middle
 # Python!
 ### import slidedeck as classnotes
 ---
-# Yesterday:
+## Yesterday:
 * Python for rendering / data analytics
 * pip
 * virtualenv
 * matplotlib
   * firstchart.py
 ---
-# Today: Python for web development.
+## Today:
+### Python for web development.
 * Python is used as a web development language.
 * Backend code, similar to PHP in purpose, if not in syntax.
 ---
-# Python Frameworks
+## Python Frameworks
 * Flask
 * Bottle
 * Cherrypy
 * Django
 ---
-# Flask
+## Flask
 * http://flask.pocoo.org/
 * micro framework
 * similar in function to SlimPHP
 ---
+## Example
 ```Python
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
@@ -73,14 +65,14 @@ def create():
     return render_template('blog/create.html')
 ```
 ---
-# Exercise:
+## Exercise:
 Flask Quickstart
 * http://flask.pocoo.org/docs/1.0/quickstart/
 ---
-# Sample Flask App:
+## Sample Flask App:
 * https://github.com/pallets/flask/blob/1.0.2/examples/tutorial/flaskr/blog.py
 ---
-# Flask Rest API
+## Flask Rest API
 * Build it in vanilla flask
   * less complexity
 * Flask Restful
@@ -91,7 +83,7 @@ Flask Quickstart
   * https://github.com/zalando/connexion
   * https://github.com/hjacobs/connexion-example
 ---
-# Lab / Assignment
+## Lab / Assignment
 Recreate your "firstslim" API you created in PHP as a Python API.
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">

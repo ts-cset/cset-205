@@ -3,46 +3,29 @@
   <head>
     <title>Title</title>
     <meta charset="utf-8">
-    <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
-
-      body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
-      }
-      img {
-        max-width: 100%;
-        border-style: solid;
-        border-width: 5px;
-        border-radius: 5px;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../../slides.css"/>
   </head>
   <body>
     <textarea id="source">
-# Agenda
+## Agenda
 1. Recap of last class
 2. Virtualbox
 3. Vagrant
 4. PHP!
 ---
-# Lets Review:
+## Lets Review:
 * Types of Documentation
 * Documentation generators
 * Semantic Versioning
 * API Versioning
 
 ---
-# Development Environments
+## Development Environments
 * Dev environment ideally matches production environment
 * Need a way to run ubuntu on your laptops.
 * Don't want to uninstall your existing operating system.
 ---
-# Virtualbox!
+## Virtualbox!
 Virtualbox is a free virtualization tool that allows you to run a virtual computer inside your computer.
 * Benefits of virtual machines:  Can have multiple versions of dependencies without running into conflicts.
   * different versions of mysql
@@ -53,12 +36,12 @@ Virtualbox is a free virtualization tool that allows you to run a virtual comput
 * https://www.virtualbox.org/
 * Download and run the installer.
 ---
-# Now what?
+## Now what?
 We need a server!
 Everyone go download and configure a server to run in virtualbox.
 --
 
-## wait, that could cause a problem.
+### Wait, that could cause a problem.
 --
 
 * I download Ubuntu.
@@ -76,14 +59,14 @@ Everyone go download and configure a server to run in virtualbox.
 * Everyone's server could be slightly different.
 
 ---
-# Now what?
+## Now what?
 
 ~~Everyone go download and configure a server to run in virtualbox.~~
 
 We need a way to programatically configure a server for us so that we all have the same server.
 
 ---
-# Enter Vagrant!
+## Enter Vagrant!
 
 Vagrant is a server management toolset.
 
@@ -91,23 +74,24 @@ Vagrant is a server management toolset.
 * cuts down on "It works for me" issues.
 
 ---
-# Exercise:
+## Exercise:
 My First Vagrant Server!
 https://www.vagrantup.com/intro/getting-started/index.html
 ---
-# Why are we doing this?
+## Why are we doing this?
 * gain exposure to industry standard tools
 * prep for the next major part of the class.
   * creating our own APIs!
 
 ---
-# New Programming Language! PHP!
+## New Programming Language!
+### PHP!
 
 * PHP is a server side language
 * 83% of all websites are built with PHP!  https://w3techs.com/
 * Guarantee that a good portion of the sites you use are built with PHP.
 
-## Frameworks in PHP
+#### Frameworks in PHP
 * Wordpress
 * Drupal
 * Laravel
@@ -115,14 +99,14 @@ https://www.vagrantup.com/intro/getting-started/index.html
 * Cake
 * Zend
 ---
-# What is PHP?
+## What is PHP?
 * web programming language created in 1994!
 * Backend language that is executed on the server.
 * Powers most of the internet.
 * Can be mixed into HTML.
 * Current Version: 7
 ---
-# How Does it work?
+## How Does it work?
 ```PHP
 <?php
 // Some code to be executed
@@ -147,7 +131,8 @@ Can be mixed with HTML, to create 'dynamic' html.
 </html>
 ```
 ---
-# Variables
+## Variables
+### Variables
 ```PHP
 $variable = 'value';
 $array = ['value1', $variable, 'value2'];
@@ -157,20 +142,27 @@ $array[0]; // will evaluate to 'value1'
 * variable names must start with either a letter, or an underscore
 * names can only contain alphanumeric characters and underscores
 
-## Constnts
+### Constants
 ```PHP
 define("SITE_URL", "https://www.example.com/");
 echo(SITE_URL)
 ```
 * variable that cannot change.
 ---
-# Useful Functions
+## Useful Functions
 Echo
 ```PHP
 echo('this is a string');
 echo('<h1>I can print HTML too!</h1>');
+```
+var_dump()
+```PHP
+var_dump($foo);
+var_dump('I can print HTML too!');
+```
 ---
-# Data Types
+## Data Types
+
 * Integer
 * Strings
 * Floating Point Numbers (Doubles)
@@ -181,8 +173,8 @@ echo('<h1>I can print HTML too!</h1>');
 * Resources
 
 ---
-# Data Types
-## Integer
+## Data Types
+### Integer
 * whole numbers
 ```PHP
 $num = 42;
@@ -190,8 +182,8 @@ $num = 42;
 ```
 
 ---
-# Data Types
-## Strings
+## Data Types
+### Strings
 * Text characters
 ```PHP
 $str = 'I am a string';
@@ -199,8 +191,8 @@ $str = 'I am a string';
 ```
 
 ---
-# Data Types
-## Floats (Decimal)
+## Data Types
+### Floats (Decimal)
 * Decimal values
 ```PHP
 $float = 42.5;
@@ -208,8 +200,8 @@ $float = 42.5;
 ```
 
 ---
-# Data Types
-## Boolean
+## Data Types
+### Boolean
 * True/False
 ```PHP
 $bool = true;
@@ -217,8 +209,8 @@ $bool2 = false;
 ```
 
 ---
-# Data Types
-## Arrays
+## Data Types
+### Arrays
 * lists of data
 * 2 kinds of array.
   * Indexed Array
@@ -234,8 +226,8 @@ $colors3 = array(
 ```
 
 ---
-# Data Types
-## Objects
+## Data Types
+### Objects
 * This is a class
 * contains fields (data)
 * contains functions for interracting with the fields.
@@ -258,19 +250,19 @@ var_dump($message);
 ```
 
 ---
-# Data Types
-## Null
+## Data Types
+### Null
 * This is the PHP 'empty' variable value
 
 ---
-# Data Types
-## Resource
+## Data Types
+### Resource
 * This is used to reference outside dependencies or objects.
   * file handler
   * email handler
   * etc...
 ---
-# Functions
+## Functions
 Functions are basically the same as in javascript.
 
 ```PHP
@@ -282,31 +274,30 @@ $message = halSaysNo("Dave");
 echo $message;
 ```
 ---
-# Wordpress!
+## Wordpress!
 * PHP powered CMS.
 * most popular website platform
 --
 # labs/virtualMachines
-```
+```Bash
 vagrant up
 ```
 --
 * create a database
-```
+```Bash
 mysql -u root -p
 ```
 (password is root)
-```
+```Bash
 create database wp;
 exit
 ```
 Download wordpress, extract it and place it in virtualMachines
 http://192.168.33.10/wordpress//wp-json/wp/v2/posts
 ---
-Exercise / Further Reading:  https://www.tutorialrepublic.com/php-tutorial/php-introduction.php
----
-
-
+## Exercise
+### Exercise / Further Reading:
+https://www.tutorialrepublic.com/php-tutorial/php-introduction.php
 
   </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">

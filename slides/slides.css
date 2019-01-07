@@ -1,0 +1,51 @@
+/*
+CSS is a modified styling, based on sfc-arch's remark-theme, Blue Standard.
+https://github.com/sfc-arch/remark-theme
+*/
+body{
+  font-family:'Helvetica Neue Light','Helvetica Light','ヒラギノ角ゴ ProN','Hiragino Kaku Gothic ProN','メイリオ',Meiryo,sans-serif
+}
+.remark-code{
+    padding: 1em!important;
+    border-radius: 10px;
+    background-color: #ced4d8!important;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+.remark-slide-content:not(.title):not(.blank)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 4.5em;
+    margin: 0;
+    padding: 0;
+    background-color: #2980b9;
+}
+.remark-slide-content:not(.title):not(.blank) h2 {
+    color: #fff;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+  max-width: 100%;
+  border-style: solid;
+  border-width: 5px;
+  border-radius: 5px;
+  position: relative;
+}
+.image-large img {
+  height: 500px;
+}
+.longheader {
+  font-size: 40px !important;
+  margin-bottom: 28px !important;
+}
+.longerheader {
+  font-size: 36px !important;
+  margin-bottom: 32px !important;
+}

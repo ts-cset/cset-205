@@ -3,7 +3,9 @@
   <head>
     <title>Title</title>
     <meta charset="utf-8">
-    <style>
+    <link rel="stylesheet" type="text/css" href="../../slides.css"/>
+
+    <!-- <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
@@ -20,16 +22,16 @@
         border-radius: 5px;
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
+    </style> -->
   </head>
   <body>
     <textarea id="source">
-# Agenda
+## Agenda
 1. Recap of last class
 2. API Documentation
 3. Versioning
 ---
-# Lets Review:
+## Lets Review:
 * What is an api and what are some benefits of using one?
 
 --
@@ -42,15 +44,16 @@
 * RESTful api urls are focused around what?
 
 ---
-# Questions, Concerns, Comments, Complaints?
+## Questions, Concerns?
 Any questions/comments from previous class?
 Speak up!  We have plenty of time each class to answer questions and review material.
 ---
-# API Documentation
+## API Documentation
 
 A well documented api is a thing of beauty.  A poorly documented api is a developer's worst nightmare.
 ---
-# Example 1: Oracle Netsuite (Enterprise Resource Planning tool)
+## Example 1: Oracle Netsuite
+###(Enterprise Resource Planning tool)
 http://www.netsuite.com/portal/developers/resources/suitetalk-documentation.shtml
 
 API Documentation: WSDL File.
@@ -58,9 +61,8 @@ https://webservices.netsuite.com/wsdl/v2018_1_0/netsuite.wsdl
 * This style of documentation works......... If you know what to look for & have the tools to parse it.
 * Not user friendly AT ALL!
 
---
-
-# Example 2: Twilio
+---
+## Example 2: Twilio
 https://www.twilio.com/docs/voice
 * Code Examples
 * Human readable documentation
@@ -73,27 +75,28 @@ https://www.twilio.com/docs/voice
 * Changelogs
 
 ---
-# Why Write Documentation?
+## Why Write Documentation?
 * Can help you stay focused when writing code
 * Helps the readability of your code
 * Easier to transfer projects to other developers
 * Sometimes it is required by the client
 
 <!--- these are just some of the benefits --->
-## Why Write Inline Code Documentation?
+---
+## Inline Code Documentation
 * Developers can more easily read and understand individual classes, methods, functions... etc
 * Can generate html formatted documentation directly from the source code which is easier to keep up to date
 * It is much easier to write code comments along the way, rather than trying to go back and add them later
 
 ---
-# Inline Code Documentation
-## Intended User: API Developer
+## Inline Code Documentation
+### Intended User: API Developer
 * make life easier for you as a developer.
 * clearly defines input, output and a description of the function.
 * This is good for coming back to a piece of code in the future and troubleshooting.
 * Also good for code review in a team setting.
 ---
-# Javadoc
+## Javadoc
 Javadoc was created by Sun Microsystems for the Java language
 * It's fairly easy to read and write
 * Many IDE's and text editors will recognize the syntax and help autocomplete/color code
@@ -116,30 +119,30 @@ boolean isValidMove(int theFromFile, int theFromRank, int theToFile, int theToRa
 }
 ```
 ---
-  Examples
-  ## PHP
-  ```PHP
-  /**
-    * Gets the identified user record
-    * [GET] /users/{slug}
-    * @param string $slug Slug of user to get
-    *
-    * @return object Returns the user object.
-    **/
-    public function getUserAction($slug)
-     {
-         $user = getUser($slug);
-         return json_encode($user)
-     }
-  ```
+## Example: PHP
+```PHP
+/**
+  * Gets the identified user record
+  * [GET] /users/{slug}
+  * @param string $slug Slug of user to get
+  *
+  * @return object Returns the user object.
+  **/
+  public function getUserAction($slug)
+   {
+       $user = getUser($slug);
+       return json_encode($user)
+   }
+```
 ---
-# JSDoc
+## Example: JSDoc
 * JSDoc http://usejsdoc.org/
 * Similar to Javadoc or phpDocumentor
 * Extensions are available for several editors / IDEs
 * Can be installed globally or as a project dev dependency
 ---
-## Install Globally with NPM
+## Installing JSDoc
+Install Globally with NPM
 ```bash
 npm install -g jsdoc
 ```
@@ -150,7 +153,7 @@ jsdoc src -r -c ./jsdoc.json -d docs
 open ./docs/index.html
 ```
 ---
-# Common JSDoc Tags
+## Common JSDoc Tags
 * The @param tag provides the name, type, and description of a function parameter.
 * The @returns tag documents the value that a function returns.
 * The @since tag indicates that a class, method, or other symbol was added in a specific version.
@@ -173,11 +176,11 @@ function sum(a, b) {
 }
 ```
 ---
-# Exercise: Lets Add Documentation!
+## Exercise: Lets Add Documentation!
 documentation-demo in the labs
 ---
-# API Spec Sheets
-## Intended User: API Developer/Designer
+## API Spec Sheets
+### Intended User: API Developer/Designer
 This is a technical document that details all endpoints, responses, parameters and examples of an api.
 Used when planning and building an API.
 
@@ -189,27 +192,32 @@ Contains info about the following:
 * content types
 * YAML, JSON etc...
 ---
-__Story Time!__
-.center[![Center-aligned image](realapispec.png)]
+## Story Time!
+### Built an API with the folloiwng strtucture / requirements:
 * 35+ endpoints
 * we create api spec
 * customer built it
 * we use it in web application
 ---
+## Story Time!
+* It looked something like this:
+.center[![Center-aligned image](realapispec.png)]
+---
+## Swagger
 Tool for building API Specs:  https://editor.swagger.io/#
 
 .center[![Center-aligned image](swagger.png)]
 ---
-# Exercise: Lets Add Documentation!
+## Exercise: Lets Add Documentation!
 Create a spec sheet for the api.
 
 Back to the cars api!
 ---
-# Swagger JSDoc
+## Swagger JSDoc
 * Allows inline code documentation for a REST API
 * Parses swagger syntax from JSDoc tags
 * Creates a OpenAPI (Swagger) specification file
-## Install Globally with NPM
+### Install Globally with NPM
 ```bash
 npm install swagger-jsdoc -g
 ```
@@ -232,10 +240,10 @@ module.exports = {
 ```bash
 swagger-jsdoc -d swaggerDef.js ./src/**.js
 ```
-## Visit https://editor.swagger.io/ and copy/pasta or import your swagger.json file
+### Visit https://editor.swagger.io/ and copy/pasta or import your swagger.json file
 ---
-# Documentation Websites
-## Intended User: customers, prospective customers, developers, users etc...
+## Documentation Websites
+### Intended User: customers, prospective customers, developers, users etc...
 A good documentation site will drive developers to your api, but a bad one will actively drive them away.
 Parts of a good API Documentatio site:
 * quickstart guide
@@ -246,7 +254,7 @@ Parts of a good API Documentatio site:
 * error handling/troubleshooting guide
 * tutorials
 ---
-# Example Documentation Site:
+## Example Documentation Site:
 
 Twilio: Phone Service API Provider
 https://www.twilio.com/docs/usage/api
@@ -262,31 +270,33 @@ This is a markdown file converted into HTML via a generator tool.
 * Flatdoc http://ricostacruz.com/flatdoc/
 ---
 
-# Documentation.js
+## Documentation.js
 * Uses JSDoc formatting so either tool can be used on the same project
 * Since it uses JSDoc all the editor plugins are compatible
 * Can be installed globally or as a project dev dependency
-## Install Globally with NPM
+
+### Install Globally with NPM
 ```bash
 npm install -g documentation
 ```
 
-## Generate Documentation
+### Generate Documentation
 Each time you want to create or update the html documentation, run the executable
 ```bash
 documentation build src/** -f html -o docs
 open ./docs/index.html
 ```
 ---
-## Documentation.js can also serve, and live-update HTML docs
+## Documentation.js
+It can also serve, and live-update HTML docs
 ```bash
 documentation.js serve --watch src/** -f html
 ```
 ---
-# Changelogs / Release Notes
+## Changelogs / Release Notes
 A record of changes and updates made to the system.  Usually published when a new release/version of the project is made public.
 
-## Example Release Notes:
+### Example Release Notes:
 Version 1.0.10 Release Notes:
 A new endpoint for "packages" was created.
 __Breaking Changes:__ The field "delivery attempted" was removed from the "deliveries" endpoint.
@@ -294,7 +304,7 @@ __Breaking Changes:__ The field "delivery attempted" was removed from the "deliv
 Real Example: https://www.twilio.com/docs/voice/voip-sdk/ios/changelog
 
 ---
-# Changes to the API
+## Changes to the API
 * Things change
 * New features are added
 * Bugs are found & fixed
@@ -303,7 +313,7 @@ Real Example: https://www.twilio.com/docs/voice/voip-sdk/ios/changelog
 How do we indicate this to someone consuming our API?
 
 ---
-# Semantic Versioning!
+## Semantic Versioning!
 https://semver.org/
 
 Semantic versioning is an intuitave way of indicating the nature of patches released to the system.
@@ -314,7 +324,7 @@ Ex: v1.8.9
 * Minor Version 8
 * Patch 10
 ---
-# Version Types
+## Version Types
 Ex: v1.8.9
 * Patch
   * Bugfix (backwards compatible)
@@ -323,7 +333,7 @@ Ex: v1.8.9
 * Major Version
   * Any change not backwards compatible
 ---
-# Version Numbers
+## Version Numbers
 Ex: v1.8.9
 * Major version 0 is pre-release, development/alpha/beta testing.
 * Each increment increases in increments of 1.
@@ -337,7 +347,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 
 1.10.42 is a valid version number.
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * vx.y.z : initial commit
 * vx.y.z : started adding features
 * vx.y.z : bugfix
@@ -353,7 +363,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * vx.y.z : feature removed
 
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * vx.y.z : started adding features
 * vx.y.z : bugfix
@@ -368,7 +378,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * vx.y.z : feature deprecated
 * vx.y.z : feature removed
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * v0.1.0 : started adding features
 * vx.y.z : bugfix
@@ -383,7 +393,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * vx.y.z : feature deprecated
 * vx.y.z : feature removed
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * v0.1.0 : started adding features
 * v0.1.1 : bugfix
@@ -398,7 +408,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * vx.y.z : feature deprecated
 * vx.y.z : feature removed
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * v0.1.0 : started adding features
 * v0.1.1 : bugfix
@@ -413,7 +423,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * vx.y.z : feature deprecated
 * vx.y.z : feature removed
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * v0.1.0 : started adding features
 * v0.1.1 : bugfix
@@ -428,7 +438,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * vx.y.z : feature deprecated
 * vx.y.z : feature removed
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * v0.1.0 : started adding features
 * v0.1.1 : bugfix
@@ -443,7 +453,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * vx.y.z : feature deprecated
 * vx.y.z : feature removed
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * v0.1.0 : started adding features
 * v0.1.1 : bugfix
@@ -458,7 +468,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * vx.y.z : feature deprecated
 * vx.y.z : feature removed
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * v0.1.0 : started adding features
 * v0.1.1 : bugfix
@@ -473,7 +483,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * vx.y.z : feature deprecated
 * vx.y.z : feature removed
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * v0.1.0 : started adding features
 * v0.1.1 : bugfix
@@ -488,7 +498,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * vx.y.z : feature deprecated
 * vx.y.z : feature removed
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * v0.1.0 : started adding features
 * v0.1.1 : bugfix
@@ -503,7 +513,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * vx.y.z : feature deprecated
 * vx.y.z : feature removed
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * v0.1.0 : started adding features
 * v0.1.1 : bugfix
@@ -518,7 +528,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * vx.y.z : feature deprecated
 * vx.y.z : feature removed
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * v0.1.0 : started adding features
 * v0.1.1 : bugfix
@@ -533,7 +543,7 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * v2.2.0 : feature deprecated
 * vx.y.z : feature removed
 ---
-# Lets look at a commit chain and establish some version numbers.
+## Commit Chain
 * v0.0.0 : initial commit
 * v0.1.0 : started adding features
 * v0.1.1 : bugfix
@@ -549,59 +559,61 @@ __Note:__ These are not decimals.  it is possible to have numbers > 10
 * v3.0.0 : feature removed
 ---
 
-# Indicating Version in REST
+## Indicating Version in REST
 Several ways to include version information in a REST api.
 * URL route
 * URL query parameter
 * Request Headers
 ---
-# Via URL (most common)
+## Via URL (most common)
 Major version number added to the url.
 
 https://restcountries.eu/rest/v2/
 
-## Pros:
+### Pros:
 
 * straightforward
 * easy to see what version is being used
 * simple to build.
 
-## Cons:
+### Cons:
 
 * breaking changes cause who new urls to be needed.
 * minor, patch versions not indicated.
 * potentially need several instances of the api to be 'live'
 ---
-# Via Query Parameter
+## Via Query Parameter
 Major version added as query parameter
 http://api.example.com/literature/books?version=1
 
-## Pros:
+### Pros:
 
 * easy to default if not provided
 
-## Cons:
+### Cons:
 
 * complicated routing.
 * each endpoint needs to care about version and perform different logic accordingly
 * minor, patch versions not indicated
 
 ---
-# Custom Request Headers
+## Custom Request Headers
 Full version added as custom http request header
 ```Bash
 curl -H “version: 1.0.1”
 http://api.example.com/literature/books
 ```
-## Pros:
+### Pros:
 * Most specific
 * includes minor and patch versions
 
-## Cons:
+### Cons:
 * more complicated on API side
 * more complicated on Client side
 ---
-# Technical Versioning !== Product/Marketing Versioning
+## Technical vs Marketing
+###Technical Versioning !== Product/Marketing Versioning
+
 Two types of versioning.
 1. Technical versioning (semantic versioning)
 2. Product versioning (marketing)
@@ -610,15 +622,15 @@ Two types of versioning.
 Ex: Windows NT
 https://en.wikipedia.org/wiki/Windows_NT#Releases
 ---
-# Recap
-## Documentation
+## Recap
+### Documentation
 * Inline
 * API Spec Sheets
 * Public Web Documentation
 * Changelogs
 * Generator Tools
 * Versioning
----
+
   </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
     </script>
