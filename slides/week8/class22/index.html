@@ -3,18 +3,8 @@
   <head>
     <title>Title</title>
     <meta charset="utf-8">
-    <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+    <link rel="stylesheet" type="text/css" href="../../slides.css"/>
 
-      body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
   </head>
   <body>
     <textarea id="source">
@@ -26,13 +16,13 @@ class: center, middle
 * Graphing with Python
 * Building APIs with Python
 ---
-Test Review:
-# Data Analysis:
+## Test Review:
+### Data Analysis:
 --
 
 Data analysis is a process of inspecting, cleansing, transforming, and modeling data with the goal of discovering useful information, informing conclusions, and supporting decision-making
 ---
-# Why Analyze Data?
+## Why Analyze Data?
 --
 
 * Identify trends over time
@@ -43,7 +33,7 @@ Data analysis is a process of inspecting, cleansing, transforming, and modeling 
 * Reduce personal bias when evaluating research / decisions.
 
 ---
-# Data Analysis Lifecycle
+## Data Analysis Lifecycle
 **7 steps to the data analysis**
 * Discovery / Requirements
 * Collection
@@ -53,7 +43,7 @@ Data analysis is a process of inspecting, cleansing, transforming, and modeling 
 * Automation / Computation
 * Findings / Review / Repeat
 ---
-# Discover / Requirements
+## Discover / Requirements
 --
 
 This is the planning stage of data analysis.
@@ -63,7 +53,7 @@ This is the planning stage of data analysis.
 * What are our goals?
 * What is the business value?
 ---
-# Collection
+## Collection
 --
 
 This is our data collection phase.
@@ -72,7 +62,7 @@ This is our data collection phase.
 * Interviews
 * etc...
 ---
-# Data Prep / Cleaning
+## Data Prep / Cleaning
 --
 
 This is where we look for and fix any problems with our data set.
@@ -83,7 +73,7 @@ This is where we look for and fix any problems with our data set.
 * data format checks
   * ensure all money formats are the same Ex: dollars and cents as a decimal ($2000.41) vs. cents as an integer (200041)
 ---
-# Exploration / Planning
+## Exploration / Planning
 --
 
 This is where we start to look at the data to begin planning out more detailed analysis.
@@ -92,14 +82,14 @@ This is where we start to look at the data to begin planning out more detailed a
 * Identify missing data
 * Identify further cleaning / invalid data
 ---
-# Modeling / Algorithms
+## Modeling / Algorithms
 --
 
 This is where we bring statistics, math and deeper thought into the mix.
 * Mathematical formulas are identified and built to manipulate the data.
 * Statistical models are identified and used.
 ---
-# Automation / Computation
+## Automation / Computation
 --
 
 This is where we create and or use software to run the formulas and models defined in the previous step.
@@ -107,7 +97,7 @@ This is where we create and or use software to run the formulas and models defin
 * Generate reports and charts based on the data
 * Common programming languages used: Python, R
 ---
-# Findings / Review / Repeat
+## Findings / Review / Repeat
 --
 
 This is where the decision makers review the output of the models to inform their decisions.
@@ -117,14 +107,14 @@ May result in additional analysis, new data needed,
 <br/>
 **Rinse and Repeat**
 ---
-# Data Analysys Methods
-## Qualitative vs Quantitative
+## Data Analysys Methods
+### Qualitative vs Quantitative
 --
 
-Qualitative:  Spoken word, not numerical/categorical
-Quantitative: numerical / categorical data.
+* Qualitative:  Spoken word, not numerical/categorical
+* Quantitative: numerical / categorical data.
 ---
-# Identitifying Qualitative Data Trends
+<h2 class="longerheader">Identitifying Qualitative Data Trends</h2>
 
 --
 * Read through the data several times.
@@ -132,18 +122,19 @@ Quantitative: numerical / categorical data.
 * From small trends, identify basic themes.
 * Next identify larger, more broad themes.
 ---
-# Identifying Quantitative Data Trends
+<h2 class="longerheader">Identifying Quantitative Data Trends</h2>
 
 --
 * numerical / statistical analysis
 * graphs and charts
 ---
-# Sampling
+## Sampling
 --
 
 ** The act of choosing what to include in your data**
----
-Types of sampling:
+--
+
+### Types of sampling:
 --
 
 * Random sampling
@@ -157,7 +148,7 @@ Types of sampling:
   * At end, ask "Is there anyone else we should get input from?"
 
 ---
-# Bias
+## Bias
 Bias is when data is skewed by outside influences the data set.
 --
 
@@ -168,7 +159,7 @@ Bias is when data is skewed by outside influences the data set.
   * As a result, your results will be skewed towards the extremes
 ---
 
-# Data Visualization
+## Data Visualization
 * D3
   * https://bl.ocks.org/hrecht/f84012ee860cb4da66331f18d588eee3
 * Matplotlib
@@ -180,17 +171,17 @@ Bias is when data is skewed by outside influences the data set.
 * bar, line, pie etc...
 
 ---
-# Mapping
+## Mapping
 * Leaflet.js
   * https://leafletjs.com/examples/quick-start/
 * GEOJson & Geographical Data
   * https://en.wikipedia.org/wiki/GeoJSON
 
 ---
-# Data Analysis Review Exercise:
+## Data Analysis Review Exercise:
 Project:  I am a stock investor who wants to buy into a new stock.  Evaluate 5 stocks and come up with a few visualizations showing me what stock to pick.
 
-## Requirements:
+### Requirements:
 * Work through the data analysis lifechycle.
 * Use alphavantage.co API to get stock data
 * Create several charts to show which stock will provide the best return on investment.

@@ -3,18 +3,8 @@
   <head>
     <title>Title</title>
     <meta charset="utf-8">
-    <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+    <link rel="stylesheet" type="text/css" href="../../slides.css"/>
 
-      body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
   </head>
   <body>
     <textarea id="source">
@@ -24,7 +14,7 @@ class: center, middle
 # Review of Yesterday!
 ## Data Analysis!
 ---
-# Data Analysis
+## Data Analysis
 What is Data Analysis?
 <br/>
 <br/>
@@ -41,7 +31,7 @@ Data analysis is a process of inspecting, cleansing, transforming, and modeling 
   * Facilitate research
   * Reduce personal bias when evaluating research / decisions.
 ---
-# Data Analysis Lifecycle
+## Data Analysis Lifecycle
 **7 steps to the data analysis**
 --
 
@@ -65,7 +55,7 @@ Data analysis is a process of inspecting, cleansing, transforming, and modeling 
 
 * Findings / Review / Repeat
 ---
-# Discover / Requirements
+## Discover / Requirements
 --
 
 This is the planning stage of data analysis.
@@ -75,7 +65,7 @@ This is the planning stage of data analysis.
 * What are our goals?
 * What is the business value?
 ---
-# Collection
+## Collection
 --
 
 This is our data collection phase.
@@ -84,7 +74,7 @@ This is our data collection phase.
 * Interviews
 * etc...
 ---
-# Data Prep / Cleaning
+## Data Prep / Cleaning
 
 This is where we look for and fix any problems with our data set.
 * missing data points
@@ -94,25 +84,25 @@ This is where we look for and fix any problems with our data set.
 * data format checks
   * ensure all money formats are the same Ex: dollars and cents as a decimal ($2000.41) vs. cents as an integer (200041)
 ---
-# Exploration / Planning
+## Exploration / Planning
 This is where we start to look at the data to begin planning out more detailed analysis.
 * Look for high level trends in the data
 * Identify possible algorithms or modeling to build later
 * Identify missing data
 * Identify further cleaning / invalid data
 ---
-# Modeling / Algorithms
+## Modeling / Algorithms
 This is where we bring statistics, math and deeper thought into the mix.
 * Mathematical formulas are identified and built to manipulate the data.
 * Statistical models are identified and used.
 ---
-# Automation / Computation
+## Automation / Computation
 This is where we create and or use software to run the formulas and models defined in the previous step.
 * Create functions to run against the data
 * Generate reports and charts based on the data
 * Common programming languages used: Python, R
 ---
-# Findings / Review / Repeat
+## Findings / Review / Repeat
 This is where the decision makers review the output of the models to inform their decisions.
 <br/>
 May result in additional analysis, new data needed,
@@ -120,7 +110,7 @@ May result in additional analysis, new data needed,
 <br/>
 **Rinse and Repeat**
 ---
-# Yesterday's Exercise:
+## Yesterday's Exercise:
 Looked at Mr. Steve who wants to open a beach town.
 
 What did we find?
@@ -129,29 +119,29 @@ What did we find?
 Piles of scv data!
 <br/>
 ---
-# What did we do?
+## What did we do?
 * Processed the data in PHP
 * rendered it into an HTML table
 * started plugging it into D3 for graphs.
 ---
-# Visualizations:
+## Visualizations:
 * We saw a simple visualization yesterday.  (Table rendering).
 <br/>
-## More advanced rendering is possible.
+### More advanced rendering is possible.
 * d3.js
-## What is D3?
+### What is D3?
 * Data Driven Documents
 * Creates and manipulates html elements based on data via javascript
 * Styled via CSS
 * Can manipulate HTML and SVGs
 
 ---
-# Bar Charts:
+## Bar Charts:
 * This tutorial was created by the creator of D3.
 * Go through each of the three sections, then incorporate our temperature data from yesterday into the graph.
 * Exercise: https://bost.ocks.org/mike/bar/
 ---
-# Lab:
+## Lab:
 Flow through the Data Analysis Lifecycle on this data set:  https://www.census.gov/data/datasets/2017/demo/popest/counties-detail.html
 Census data by County (for a given state).
 
